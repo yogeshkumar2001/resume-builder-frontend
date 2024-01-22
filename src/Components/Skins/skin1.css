@@ -1,0 +1,16 @@
+.box{
+    margin: 10px;
+    text-align: left;
+    /* background-color: red; */
+}
+.main-heading{
+    color:red;
+}
+.main-header{
+    background-color:red;
+    color:white
+}
+.line{
+    height: 2px;
+    background-color: red;
+}
