@@ -4,13 +4,13 @@ import detailForms from '../formConfig/FormConfig';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { increaseStep, setUserFormData } from '../../Redux/action';
-
+import { useNavigate } from 'react-router-dom';
 function Details(props) {
     const [formStep, setformStep] = useState(props.step.value);
     const [formData, setFormData] = useState(props.userDetails);
     console.log(props)
     let formToDisplay = detailForms[formStep];
-
+    let navigate = useNavigate();
     function nextFormHandler(e) {
         console.log(formData)
         e.preventDefault();
@@ -18,6 +18,8 @@ function Details(props) {
             props.increaseStep({ value: formStep + 1 });
             setformStep(formStep + 1);
             props.setUserFormData(formData)
+        } else {
+            navigate("/final")
         }
     }
 
@@ -44,14 +46,14 @@ function Details(props) {
 
                         <div className="row justify-content-between text-left">
                             {Object.entries(formToDisplay).map(([key, value]) => (
-                                
+
                                 <div className="form-group col-sm-6 flex-column d-flex" key={key}>
                                     <label className="form-control-label px-3">{value.label}<span className="text-danger"> *</span></label>
                                     <input
                                         type={value.type}
                                         id={key}
                                         name={key}
-                                        defaultValue={props?.userDetails[key] != undefined ? props.userDetails[key] : "" }
+                                        defaultValue={props?.userDetails[key] != undefined ? props.userDetails[key] : ""}
                                         placeholder={value.placeholder}
                                         onBlur={handleInputChange}
                                         required
