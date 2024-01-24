@@ -1,10 +1,17 @@
 let initialState = {
-    chooseTemplate: {}
+    choosedTemplate: {
+        id: null, path: null
+    },
+    detailsStep: { value: 0 }
 }
 const appReducer = function reduxReducer(state = initialState, action) {
     switch (action.type) {
-        case "CHOOSE_TEMPLATE":
-            return { ...state, chooseTemplate: action.payload }
+        case "CHOOSED_TEMPLATE":
+            return { ...state, choosedTemplate: action.payload }
+        case "INCREASE_STEP":
+            return {...state,detailsStep:action.payload}
+        case "DECREASE_STEP":
+            return {...state,detailsStep:action.payload}
         default:
             return state;
     }

@@ -12,8 +12,9 @@ import "./template.css"
 import { updateTemplateData } from '../../Redux/action'
 import { connect } from 'react-redux'
 import {bindActionCreators} from "redux";
+import {useNavigate} from "react-router-dom"
 function Template({updateTemplateData,TemplateData}) {
-    console.log(TemplateData)
+    let history  = useNavigate();
     let skinsArr = [
         { id: "skin1", path: skin1 },
         { id: "skin2", path: skin2 },
@@ -22,13 +23,13 @@ function Template({updateTemplateData,TemplateData}) {
         { id: "skin5", path: skin5 },
         { id: "skin6", path: skin6 },
         { id: "skin7", path: skin7 },
-        { id: "skin8", path: skin8 },]
-
+        { id: "skin8", path: skin8 },
+    ]
 
     function updateTemplateDataHandler(e){
         e.preventDefault();
-        console.log(e);
-        updateTemplateData(1);
+        updateTemplateData({id:e.target.id , path:e.target.attributes[2].nodeValue});
+        history("/details")
     }    
     return (
         <div className="templates-container">
@@ -47,7 +48,7 @@ function Template({updateTemplateData,TemplateData}) {
                             <div
                                 className="choose-template btn btn-primary"
                                 id={skin.id}
-                                path={skin.path}
+                                value={skin.path}
                             // onClick={(e) => handleChooseTemplate(e)}
                             >
                                 Choose Template
