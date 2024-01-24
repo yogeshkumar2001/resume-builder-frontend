@@ -4,20 +4,7 @@ import "./contact.css"
 import skinPng from "../assests/images/skin1.png"
 import { contactForm } from '../formConfig/FormConfig'
 function Details(prop) {
-    // prop=contactForm
-    // let count = 1;
-    // for(let [key,value] of contactForm){
-
-    // }
-
-    // <div class="row justify-content-between text-left">
-    //                         <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">First name<span class="text-danger"> *</span></label> <input type="text" id="fname" name="fname" placeholder="Enter your first name" onblur="validate(1)"/> </div>
-    //                         <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Last name<span class="text-danger"> *</span></label> <input type="text" id="lname" name="lname" placeholder="Enter your last name" onblur="validate(2)" /> </div>
-    //                     </div>
-    //                     <div class="row justify-content-between text-left">
-    //                         <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Business email<span class="text-danger"> *</span></label> <input type="text" id="email" name="email" placeholder="" onblur="validate(3)" /> </div>
-    //                         <div class="form-group col-sm-6 flex-column d-flex"> <label class="form-control-label px-3">Phone number<span class="text-danger"> *</span></label> <input type="text" id="mob" name="mob" placeholder="" onblur="validate(4)" /> </div>
-    //                     </div>
+    
     return (
         <div className="container">
             <div className="d-flex">

@@ -9,15 +9,27 @@ import skin7 from "../assests/images/skin7.svg"
 import skin8 from "../assests/images/skin8.svg"
 import { Link } from 'react-router-dom'
 import "./template.css"
-function Template() {
-    let skinsArr = [{ id: "skin1", path: skin1 },
-    { id: "skin2", path: skin2 },
-    { id: "skin3", path: skin3 },
-    { id: "skin4", path: skin4 },
-    { id: "skin5", path: skin5 },
-    { id: "skin6", path: skin6 },
-    { id: "skin7", path: skin7 },
-    { id: "skin8", path: skin8 },]
+import { updateTemplateData } from '../../Redux/action'
+import { connect } from 'react-redux'
+import {bindActionCreators} from "redux";
+function Template({updateTemplateData,TemplateData}) {
+    console.log(TemplateData)
+    let skinsArr = [
+        { id: "skin1", path: skin1 },
+        { id: "skin2", path: skin2 },
+        { id: "skin3", path: skin3 },
+        { id: "skin4", path: skin4 },
+        { id: "skin5", path: skin5 },
+        { id: "skin6", path: skin6 },
+        { id: "skin7", path: skin7 },
+        { id: "skin8", path: skin8 },]
+
+
+    function updateTemplateDataHandler(e){
+        e.preventDefault();
+        console.log(e);
+        updateTemplateData(1);
+    }    
     return (
         <div className="templates-container">
             <div className="templates-welcome">
@@ -31,12 +43,12 @@ function Template() {
                         <div className="template-image">
                             <img src={skin.path} alt="" />
                         </div>
-                        <Link to="/contact">
+                        <Link onClick={(e)=>{updateTemplateDataHandler(e)}}>
                             <div
                                 className="choose-template btn btn-primary"
                                 id={skin.id}
                                 path={skin.path}
-                                // onClick={(e) => handleChooseTemplate(e)}
+                            // onClick={(e) => handleChooseTemplate(e)}
                             >
                                 Choose Template
                             </div>
@@ -47,5 +59,13 @@ function Template() {
         </div>
     )
 }
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        updateTemplateData
+    },dispatch)
 
-export default Template
+}
+function mapStateToProps(state) {
+    return {TemplateData:state}
+}
+export default connect(mapStateToProps,mapDispatchToProps)(Template)

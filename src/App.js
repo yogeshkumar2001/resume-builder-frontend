@@ -7,7 +7,6 @@ import WbAbout from './Components/About/About';
 import About from './Components/About/About';
 import Skin1 from './Components/Skins/skin1';
 import Template from './Components/Template/Template';
-import Contact from './Components/forms/Contact';
 import Details from './Components/forms/Details';
 
 function App() {
@@ -28,6 +27,7 @@ function App() {
       element: <Details />
     }
   ])
+
   return (
     <div className="App">
       <Navbar></Navbar>

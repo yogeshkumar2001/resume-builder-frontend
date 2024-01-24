@@ -10,8 +10,8 @@ function HomePage() {
                         <h1 className="text-start " style={{ "color": "#13287e" }}>Online Resume Builder with creative Templates</h1>
                         <p className="text-start" style={{ "color": "#8888a7" }}>Our Perfect resume builder takes the hassle out of resume writing. Choose from several templates and follow easy prompts to create the perfect job-ready resume.</p>
                         <div class="row align-items-start justify-content-between">
-                            <div class="col btn btn-primary m-2">Choose Template</div>
-                            <div class="col btn btn-primary m-2">About us</div>
+                            <a href="/template"class="col btn btn-primary m-2">Choose Template</a>
+                            <a href="/about" class="col btn btn-primary m-2">About us</a>
                         </div>
                     </div>
                     <div class="col"><img src={banner} alt="" class="w-100" /></div>

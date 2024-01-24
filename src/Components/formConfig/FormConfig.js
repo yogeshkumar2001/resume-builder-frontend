@@ -1,4 +1,5 @@
 module.exports.contactForm = {
+    "step": { label: "Step 1", type: "text" },
     "fName": { label: "First Name", type: "text" },
     "lName": { label: "Last Name", type: "text" },
     "phNumber": { label: "Phone Number", type: "tel" },
@@ -11,6 +12,7 @@ module.exports.contactForm = {
 };
 
 module.exports.educationForm = {
+    "step": { label: "Step 2", type: "text" },
     "schoolName": { label: "School Name", type: "text" },
     "schoolLocation": { label: "School Location", type: "text" },
     "collegeName": { label: "College Name", type: "text" },
@@ -24,6 +26,7 @@ module.exports.educationForm = {
 };
 
 module.exports.workForm = {
+    "step": { label: "Step 3", type: "text" },
     "jobTitle": { label: "Job Title", type: "text" },
     "position": { label: "Position", type: "text" },
     "city": { label: "City", type: "text" },
@@ -35,9 +38,11 @@ module.exports.workForm = {
 };
 
 module.exports.skillsForm = {
+    "step": { label: "Step 4", type: "text" },
     "skills": { label: "Skills", type: "text" }
 };
 
 module.exports.achievementForm = {
+    "step": { label: "Step 5", type: "text" },
     "achievement": { label: "Achievement", type: "text" }
 };
