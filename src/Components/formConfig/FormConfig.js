@@ -6,7 +6,6 @@ const contactForm = {
     "summary": { label: "Summary", type: "text" },
     "profession": { label: "Profession", type: "text" },
     "city": { label: "City", type: "text" },
-    // "state": { label: "State", type: "text" },
     "pinCode": { label: "Pin Code", type: "text" }
 };
 
