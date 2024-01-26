@@ -1,9 +1,9 @@
-import React, { Profiler } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import {createStore,applyMiddleware} from "redux"
-import { Provider, connect } from "react-redux"
+import { Provider } from "react-redux"
 import appReducer from './Redux/Reducer';
 import {thunk} from "redux-thunk"
 import {persistStore , persistReducer } from "redux-persist";

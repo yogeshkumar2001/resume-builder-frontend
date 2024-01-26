@@ -3,7 +3,7 @@ import Skin1 from '../Skins/Skin1';
 import "./final.css";
 import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
-
+import { toPng } from 'html-to-image';
 function Final(props) {
     const options = {
         // default is `save`
@@ -15,8 +15,8 @@ function Final(props) {
         // resolution: Resolution.HIGH,
         page: {
             // margin is in MM, default is Margin.NONE = 0
-            // margin: Margin.SMALL,
-            // default is 'A4'
+            margin: 0,
+            format: 'letter',
             // default is 'portrait'
         },
         
@@ -26,10 +26,23 @@ function Final(props) {
     // const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
     const getTargetElement = () => document.getElementById('content-id');
+    
+    function Handler(){
+        // toPng(pdfRef.current, { cacheBust: true, })
+        // .then((dataUrl) => {
+        //   const link = document.createElement('a')
+        //   link.download = 'my-image-name.png'
+        //   link.href = dataUrl
+        //   link.click()
+        // })
+        // .catch((err) => {
+        //   console.log(err)
+        // })
+    }
     return (
         <div className="resume-page">
             <div className="resume-buttons">
-                <button className="btn-success" onClick={() => { generatePDF(getTargetElement, options) }}>
+                <button className="btn-success" onClick={() => { toPDF() }}>
                     Download
                 </button>
                 <button className="btn btn-primary">

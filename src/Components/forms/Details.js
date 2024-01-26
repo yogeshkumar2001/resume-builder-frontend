@@ -15,7 +15,7 @@ function Details(props) {
         console.log(formData)
         e.preventDefault();
         if (formStep < detailForms.length - 1) {
-            props.increaseStep({ value: formStep + 1 });
+            props.increaseStep({ value: 0 });
             setformStep(formStep + 1);
             props.setUserFormData(formData)
         } else {
@@ -53,7 +53,7 @@ function Details(props) {
                                         type={value.type}
                                         id={key}
                                         name={key}
-                                        defaultValue={props?.userDetails[key] != undefined ? props.userDetails[key] : ""}
+                                        defaultValue={formData && formData[key] != null ? formData[key] : ""}
                                         placeholder={value.placeholder}
                                         onBlur={handleInputChange}
                                         required

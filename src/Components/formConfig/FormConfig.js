@@ -34,7 +34,8 @@ const workForm = {
 };
 
 const skillsForm = {
-    "skills": { label: "Skills", type: "text" }
+    "skills": { label: "Skills", type: "text" },
+    "softSkills": { label: "Soft Skills", type: "text" }
 };
 
 const achievementForm = {

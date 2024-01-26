@@ -5,7 +5,6 @@ import HomePage from './Components/HomePage/HomePage';
 import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import WbAbout from './Components/About/About';
 import About from './Components/About/About';
-import Skin1 from './Components/Skins/Skin1';
 import Template from './Components/Template/Template';
 import Details from './Components/forms/Details';
 import Final from './Components/Final/Final';
