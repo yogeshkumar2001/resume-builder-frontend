@@ -8,8 +8,23 @@ import About from './Components/About/About';
 import Template from './Components/Template/Template';
 import Details from './Components/forms/Details';
 import Final from './Components/Final/Final';
-
+import Profile from './Components/Profile/Profile';
+import LogIn from './Components/Login/LogIn';
+import SignUp from './Components/SignUp/SignUp';
+import { useEffect } from 'react';
+import {gapi} from "gapi-script";
+import {GAUTH_CLIENT_ID} from "./config"
 function App() {
+  console.log(GAUTH_CLIENT_ID)
+  useEffect(()=>{
+    function start(){
+      gapi.auth2.init({
+        clientId:GAUTH_CLIENT_ID,
+        scope:""
+      })
+    }
+    gapi.load('client:auth2',start)
+  })
   let router = createBrowserRouter([
     {
       path: "/",
@@ -28,6 +43,15 @@ function App() {
     },{
       path: "/final",
       element: <Final />
+    },{
+      path: "/profile",
+      element: <Profile />
+    },{
+      path: "/login",
+      element: <LogIn />
+    },{
+      path: "/signup",
+      element: <SignUp />
     }
   ])
 
