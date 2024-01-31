@@ -15,7 +15,6 @@ import { useEffect } from 'react';
 import {gapi} from "gapi-script";
 import {GAUTH_CLIENT_ID} from "./config"
 function App() {
-  console.log(GAUTH_CLIENT_ID)
   useEffect(()=>{
     function start(){
       gapi.auth2.init({

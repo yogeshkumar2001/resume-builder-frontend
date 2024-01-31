@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import "./login.css";
-import { GoogleLogin } from "react-google-login"
+import { GoogleLogin } from '@react-oauth/google';
 import {GAUTH_CLIENT_ID} from "../../config.js"
 const LogIn = ({ isAuth, error, login }) => {
     const [id, setId] = useState("");
@@ -12,7 +12,7 @@ const LogIn = ({ isAuth, error, login }) => {
         id === "id" ? setId(value) : setPw(value);
     };
     const onSuccessHandler = (res) => {
-        console.log("login" + JSON.stringify(res))
+        console.log(res)
     }
     const onFailureHandler = (res) => {
         console.log("login failed" + res)
@@ -68,11 +68,11 @@ const LogIn = ({ isAuth, error, login }) => {
                     <hr className="line" />
                 </div>
                 <GoogleLogin
-                    clientId={GAUTH_CLIENT_ID}
-                    buttonText="Login with Google"
+                    clientId={"726868884824-d02maki4va3ef9olerp62dohpusng05e.apps.googleusercontent.com"}
+                    // buttonText="Login with Google"
                     onSuccess={onSuccessHandler}
                     onFailure={onFailureHandler}
-                    cookiePolicy={'single_host_origin'}
+                    // cookiePolicy={'single_host_origin'}
                 ></GoogleLogin>
                 <p className="note">Terms of use & Conditions</p>
             </form>
