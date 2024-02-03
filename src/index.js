@@ -11,9 +11,6 @@ import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/integration/react';
 import { GoogleOAuthProvider } from '@react-oauth/google';
 
-import {getCallAPI} from "./Components/API/helper"
-import { getAllUsersPath } from './Components/API/ApiPaths';
-
 const persistConfig = {
   key: 'resume',
   storage,

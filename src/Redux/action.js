@@ -31,3 +31,11 @@ export function setUserFormData(data) {
         })
     }
 }
+export function setUserLoggedIn(data) {
+    return function (dispatch) {
+        dispatch({
+            type: "SET_USER_AUTH",
+            payload: data
+        })
+    }
+}

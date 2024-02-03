@@ -4,7 +4,10 @@ import "./final.css";
 import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
 import { toPng } from 'html-to-image';
+import {postCallAPI} from "../API/helper"
+import { saveResumePath } from '../API/ApiPaths';
 function Final(props) {
+    console.log(props)
     const options = {
         // default is `save`
         method: 'open',
@@ -39,17 +42,32 @@ function Final(props) {
         //   console.log(err)
         // })
     }
+   async  function apiCall(obj){
+        let response = await postCallAPI({path:saveResumePath,Data:obj})
+        return response
+    }
+    async function saveResumeHandler(){
+        let postData = {
+            skinId:props.templateInfo.id,
+            skinPath:props.templateInfo.path,
+            userDetails:JSON.stringify(props.userDetails),
+            userId:props.userData.id
+        }
+        console.log(postData)
+        let resObj = await apiCall({path:saveResumePath,Data:postData});
+        console.log(resObj)
+    }
     return (
         <div className="resume-page">
             <div className="resume-buttons">
                 <button className="btn-success" onClick={() => { toPDF() }}>
                     Download
                 </button>
-                <button className="btn btn-primary">
+                <button className="btn btn-primary" onClick={saveResumeHandler}>
                     Save
                 </button>
             </div>
-            <div className="resume-template card mt-2">
+            <div className="resume-template card-final mt-2">
                 <Skin1 userDetails={props.userDetails} targetRef={targetRef} ></Skin1>
             </div>
         </div>
@@ -57,7 +75,7 @@ function Final(props) {
 }
 
 function mapStateToProps(state) {
-    return { userDetails: state.userFormDetails };
+    return { userDetails: state.userFormDetails , templateInfo : state.choosedTemplate, userData:state.userLoggedIn};
 }
 
 export default connect(mapStateToProps, null)(Final);

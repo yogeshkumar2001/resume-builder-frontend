@@ -88,7 +88,7 @@ const About = () => {
                         <h4 style={{ fontSize: "2.5rem" }}>Why Choose Our Platform?</h4>
                         <p className="contant-p">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis at dictum risus, non suscipit arcu. Quisque aliquam posuere tortor, sit amet convallis nunc scelerisque in.</p>
                         <p className="contant-p">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Labore eius molestiae facere, natus reprehenderit eaque eum, autem ipsam. Magni, error. Tempora odit laborum iure inventore possimus laboriosam qui nam. Fugit!</p>
-                        <Link className="btn dream-btn mt-30" to="/templates">Let's build your CV</Link>
+                        <Link className="btn dream-btn mt-30" to="/template">Let's build your CV</Link>
                     </div>
                 </div>
             </div>

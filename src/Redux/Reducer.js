@@ -3,7 +3,13 @@ let initialState = {
         id: null, path: null
     },
     detailsStep: { value: 0 },
-    userFormDetails: null
+    userFormDetails: null,
+    userLoggedIn: {
+        auth:false,
+        id:null,
+        name:null,
+        email:null
+    }
 }
 const appReducer = function reduxReducer(state = initialState, action) {
     switch (action.type) {
@@ -15,6 +21,7 @@ const appReducer = function reduxReducer(state = initialState, action) {
             return { ...state, detailsStep: action.payload }
         case "USER_DETAILS":
             return { ...state, userFormDetails: action.payload }
+        case "SET_USER_AUTH": return { ...state, userLoggedIn: action.payload }
         default:
             return state;
     }

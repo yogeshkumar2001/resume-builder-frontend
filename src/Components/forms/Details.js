@@ -12,7 +12,6 @@ function Details(props) {
     let formToDisplay = detailForms[formStep];
     let navigate = useNavigate();
     function nextFormHandler(e) {
-        console.log(formData)
         e.preventDefault();
         if (formStep < detailForms.length - 1) {
             props.increaseStep({ value: 0 });
@@ -42,14 +41,15 @@ function Details(props) {
             </div>
             <div className="row">
                 <div className="col">
-                    <form className="form-card" onSubmit={(e) => { nextFormHandler(e) }}>
+                    <form className="form-card m-5 mt-2" onSubmit={(e) => { nextFormHandler(e) }}>
 
                         <div className="row justify-content-between text-left">
                             {Object.entries(formToDisplay).map(([key, value]) => (
 
                                 <div className="form-group col-sm-6 flex-column d-flex" key={key}>
-                                    <label className="form-control-label px-3">{value.label}<span className="text-danger"> *</span></label>
+                                    <label className="input_label">{value.label}<span className="text-danger"> *</span></label>
                                     <input
+                                        className='input_field'
                                         type={value.type}
                                         id={key}
                                         name={key}
@@ -63,7 +63,7 @@ function Details(props) {
                         </div>
                         <div className="row justify-content-end">
                             <div className="w-100">
-                                <button type="submit" className="btn-block btn-primary w-100" >Next</button>
+                                <button type="submit" className="btn btn-primary w-100 bg-primary" >Next</button>
                             </div>
                         </div>
                     </form>
@@ -75,8 +75,8 @@ function Details(props) {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     );
 }
 

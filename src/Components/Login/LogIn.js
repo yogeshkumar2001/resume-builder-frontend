@@ -2,8 +2,13 @@ import React, { useState } from "react";
 import { Redirect } from "react-router-dom";
 import "./login.css";
 import { GoogleLogin } from '@react-oauth/google';
-import {GAUTH_CLIENT_ID} from "../../config.js"
-const LogIn = ({ isAuth, error, login }) => {
+import { GAUTH_CLIENT_ID } from "../../config.js"
+import { postCallAPI } from "../API/helper.js";
+import { googleUserVerify } from "../API/ApiPaths.js";
+import { setUserLoggedIn } from "../../Redux/action.js";
+import { bindActionCreators } from "redux";
+import { connect } from "react-redux";
+const LogIn = (props) => {
     const [id, setId] = useState("");
     const [pw, setPw] = useState("");
 
@@ -11,8 +16,28 @@ const LogIn = ({ isAuth, error, login }) => {
         const { id, value } = e.target;
         id === "id" ? setId(value) : setPw(value);
     };
-    const onSuccessHandler = (res) => {
-        console.log(res)
+    async function callAPI(token) {
+        try {
+            let res = await postCallAPI({
+                path: googleUserVerify, Data: {
+                    idToken: token
+                }
+            });
+            if (res) {
+                return res;
+            }
+        } catch (error) {
+            return error
+        }
+    }
+    
+    const onSuccessHandler = async (res) => {
+        let userdataObj = await callAPI(res.credential);
+        console.log(userdataObj)
+        if(userdataObj.message=="Login user Successfully" && userdataObj.status==200){
+            props.setUserLoggedIn({auth:true,id:userdataObj.data["_id"],name:userdataObj.data.name,email:userdataObj.data.email})
+            window.location ="/"
+        }
     }
     const onFailureHandler = (res) => {
         console.log("login failed" + res)
@@ -68,16 +93,20 @@ const LogIn = ({ isAuth, error, login }) => {
                     <hr className="line" />
                 </div>
                 <GoogleLogin
-                    clientId={"726868884824-d02maki4va3ef9olerp62dohpusng05e.apps.googleusercontent.com"}
+                    clientId={GAUTH_CLIENT_ID}
                     // buttonText="Login with Google"
                     onSuccess={onSuccessHandler}
                     onFailure={onFailureHandler}
-                    // cookiePolicy={'single_host_origin'}
+                // cookiePolicy={'single_host_origin'}
                 ></GoogleLogin>
                 <p className="note">Terms of use & Conditions</p>
             </form>
         </div>
     );
 };
-
-export default LogIn;
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        setUserLoggedIn
+    }, dispatch)
+}
+export default connect(null, mapDispatchToProps)(LogIn);
