@@ -63,7 +63,7 @@ const LogIn = (props) => {
                         title="Input title"
                         name="input-name"
                         type="text"
-                        className="input_field"
+                        className="input_field_login"
                         id="email_field"
                     />
                 </div>
@@ -79,7 +79,7 @@ const LogIn = (props) => {
                         title="Input title"
                         name="input-name"
                         type="password"
-                        className="input_field"
+                        className="input_field_login"
                         id="password_field"
                     />
                 </div>

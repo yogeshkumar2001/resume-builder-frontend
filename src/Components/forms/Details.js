@@ -4,11 +4,10 @@ import detailForms from '../formConfig/FormConfig';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { increaseStep, setUserFormData } from '../../Redux/action';
-import { useNavigate } from 'react-router-dom';
+import { redirect, useNavigate } from 'react-router-dom';
 function Details(props) {
     const [formStep, setformStep] = useState(props.step.value);
     const [formData, setFormData] = useState(props.userDetails);
-    console.log(props)
     let formToDisplay = detailForms[formStep];
     let navigate = useNavigate();
     function nextFormHandler(e) {
@@ -33,6 +32,9 @@ function Details(props) {
     function handleInputChange(e) {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
+    }
+    if (!props.userData.auth) {
+        window.location = "/login";
     }
     return (
         <div className="container">
@@ -87,7 +89,7 @@ function mapDispatchToProps(dispatch) {
 }
 
 function mapStateToProps(state) {
-    return { TemplateData: state.choosedTemplate, step: state.detailsStep, userDetails: state.userFormDetails };
+    return { TemplateData: state.choosedTemplate, step: state.detailsStep, userDetails: state.userFormDetails, userData: state.userLoggedIn };
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Details);

@@ -2,7 +2,7 @@
 import './App.css';
 import Navbar from './Components/Navbar/Navbar';
 import HomePage from './Components/HomePage/HomePage';
-import { BrowserRouter as Router, Route, Routes, createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { BrowserRouter as Router, redirect, createBrowserRouter, RouterProvider } from 'react-router-dom';
 import WbAbout from './Components/About/About';
 import About from './Components/About/About';
 import Template from './Components/Template/Template';
@@ -12,18 +12,23 @@ import Profile from './Components/Profile/Profile';
 import LogIn from './Components/Login/LogIn';
 import SignUp from './Components/SignUp/SignUp';
 import { useEffect } from 'react';
-import {gapi} from "gapi-script";
-import {GAUTH_CLIENT_ID} from "./config"
-function App() {
-  useEffect(()=>{
-    function start(){
+import { gapi } from "gapi-script";
+import { GAUTH_CLIENT_ID } from "./config"
+import { connect } from 'react-redux';
+function App(props) {
+  console.log(props)
+
+  useEffect(() => {
+    function start() {
       gapi.auth2.init({
-        clientId:GAUTH_CLIENT_ID,
-        scope:""
+        clientId: GAUTH_CLIENT_ID,
+        scope: ""
       })
     }
-    gapi.load('client:auth2',start)
+    gapi.load('client:auth2', start)
   })
+
+
   let router = createBrowserRouter([
     {
       path: "/",
@@ -39,22 +44,23 @@ function App() {
     }, {
       path: "/details",
       element: <Details />
-    },{
+    }, {
       path: "/final",
       element: <Final />
-    },{
+    }, {
       path: "/profile",
       element: <Profile />
-    },{
+    }, {
       path: "/login",
       element: <LogIn />
-    },{
+    }, {
       path: "/signup",
       element: <SignUp />
     }
   ])
-
+ 
   return (
+
     <div className="App">
       <Navbar></Navbar>
       {/* <nav style={{"--bs-breadcrumb-divider": "url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='%236c757d'/%3E%3C/svg%3E&#34;);"}} aria-label="breadcrumb">
@@ -67,5 +73,8 @@ function App() {
     </div>
   );
 }
+function mapStateToProps(state) {
+  return { userData: state.userLoggedIn }
+}
 
-export default App;
+export default connect(mapStateToProps, null)(App);

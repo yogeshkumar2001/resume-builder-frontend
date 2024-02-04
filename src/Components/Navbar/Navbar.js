@@ -22,6 +22,10 @@ function Navbar(props) {
         <li className="nav-item">
             <a className="nav-link text-primary " href="/login">Login</a>
         </li>
+        <li className="nav-item">
+            <a className="nav-link text-primary " href="/login">Sign Up</a>
+
+        </li>
     </>)
     let loggedOutNavbar = (<>
         <li className="nav-item">

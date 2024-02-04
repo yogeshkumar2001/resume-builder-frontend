@@ -56,8 +56,11 @@ function Profile(props) {
     }
     function saveFormData(e) {
         e.preventDefault();
-        console.log(formData)
         props.setUserFormData(formData)
+    }
+    if (!props.userData.auth) {
+         window.location = "/login";
+         return null;
     }
     return (
         <div className="container mt-1">

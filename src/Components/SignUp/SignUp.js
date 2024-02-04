@@ -1,23 +1,56 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { postCallAPI } from '../API/helper';
+import { createUser } from '../API/ApiPaths';
 // import "./signup.css"
 function SignUp() {
+
+   async function saveFormData(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        let formDatObj = {};
+        formData.forEach((val,key)=>{
+            formDatObj[key] = val;
+        })
+        console.log(formDatObj)
+        if(formDatObj.password != formDatObj.confirmPassword) return "password not matched"
+        let responseData = await callAPI(formDatObj); 
+        console.log(responseData);
+    }
+    async function callAPI(data){
+        let response  = await postCallAPI({path:createUser, Data:data});
+        return response;
+    }
     return (
-        <form>
-            <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
-                <div className="w-full bg-white rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0">
-                    <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-                        <p className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-                            Create an account
-                        </p>
+        <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+            <div className="w-full bg-white rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0">
+                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+                    <p className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
+                        Create an account
+                    </p>
+                    <form onSubmit={(e) => { saveFormData(e) }}>
                         <div>
                             <label className="block mb-2 text-sm font-medium text-gray-900">
-                                Your username
+                                Your Username
                             </label>
                             <input
-                                placeholder="JohnDoe"
+                                placeholder="username"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                                 id="username"
                                 type="text"
+                                name="name"
+                                required
+                            />
+                        </div><div>
+                            <label className="block mb-2 text-sm font-medium text-gray-900">
+                                Your Email
+                            </label>
+                            <input
+                                placeholder="Email"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
+                                id="username"
+                                type="email"
+                                name="email"
+                                required
                             />
                         </div>
                         <div>
@@ -25,10 +58,12 @@ function SignUp() {
                                 Password
                             </label>
                             <input
-                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                                 placeholder="••••••••"
+                                className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                                 id="password"
                                 type="password"
+                                name="password"
+                                required
                             />
                         </div>
                         <div>
@@ -38,8 +73,10 @@ function SignUp() {
                             <input
                                 className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg block w-full p-2.5"
                                 placeholder="••••••••"
+                                name="confirmPassword"
                                 id="confirmPassword"
                                 type="password"
+                                required
                             />
                         </div>
                         <div className="flex items-start">
@@ -49,6 +86,7 @@ function SignUp() {
                                     type="checkbox"
                                     aria-describedby="terms"
                                     id="terms"
+                                    required
                                 />
                             </div>
                             <div className="ml-3 text-sm">
@@ -56,7 +94,7 @@ function SignUp() {
                                     I accept the
                                     <a
                                         href="#"
-                                        className="font-medium text-primary-600 hover:underline text-primary-500"
+                                        className="font-medium text-primary-600 hover:underline text-primary-500 ml-1"
                                     >
                                         Terms and Conditions
                                     </a>
@@ -70,10 +108,10 @@ function SignUp() {
                         >
                             Create an account
                         </button>
-                    </div>
+                    </form>
                 </div>
             </div>
-        </form>
+        </div>
     )
 }
 
