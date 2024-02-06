@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Redirect } from "react-router-dom";
 import "./login.css";
 import { GoogleLogin } from '@react-oauth/google';
 import { GAUTH_CLIENT_ID } from "../../config.js"
@@ -16,6 +15,7 @@ const LogIn = (props) => {
         const { id, value } = e.target;
         id === "id" ? setId(value) : setPw(value);
     };
+   
     async function callAPI(token) {
         try {
             let res = await postCallAPI({
@@ -33,7 +33,6 @@ const LogIn = (props) => {
     
     const onSuccessHandler = async (res) => {
         let userdataObj = await callAPI(res.credential);
-        console.log(userdataObj)
         if(userdataObj.message=="Login user Successfully" && userdataObj.status==200){
             props.setUserLoggedIn({auth:true,id:userdataObj.data["_id"],name:userdataObj.data.name,email:userdataObj.data.email})
             window.location ="/"

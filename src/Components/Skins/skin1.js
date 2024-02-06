@@ -2,9 +2,8 @@ import React from 'react'
 import "./skin1.css"
 function skin1(props) {
     let obj = props.userDetails;
-    let skillsArr = props.userDetails.skills.split(",");
-    let achievementArray = props.userDetails.achievement.split(",");
-    console.log(props)
+    let skillsArr = props.userDetails?.skills?.split(",");
+    let achievementArray = props.userDetails?.achievement?.split(",");
     return (
         <div className="container bg-white skin-container p-0" id='content-id' ref={props.targetRef}>
             <div className="header main-header">
@@ -19,7 +18,7 @@ function skin1(props) {
                     <div className="box">
                         <h5 className="main-heading">Professional experience</h5>
                         <div className="text-white">
-                            {skillsArr.map((v) => {
+                            {skillsArr?.map((v) => {
                                 return <p>{v}</p>
                             })}
                         </div>

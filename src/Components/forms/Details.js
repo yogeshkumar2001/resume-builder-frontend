@@ -10,14 +10,22 @@ function Details(props) {
     const [formData, setFormData] = useState(props.userDetails);
     let formToDisplay = detailForms[formStep];
     let navigate = useNavigate();
+    console.log(formStep, detailForms.length)
+    // props.increaseStep({ value:0});
     function nextFormHandler(e) {
         e.preventDefault();
-        if (formStep < detailForms.length - 1) {
-            props.increaseStep({ value: 0 });
+        if (e.target[0].id == "achievement") {
+            console.log(e.target[0].id)
+            props.setUserFormData(formData)
+            // props.increaseStep({ value: 0 });
+            // setformStep(0);
+            navigate("/final");
+        }
+        else if (formStep < detailForms.length) {
+            props.increaseStep({ value: formStep + 1 });
             setformStep(formStep + 1);
             props.setUserFormData(formData)
-        } else {
-            navigate("/final")
+
         }
     }
 
@@ -36,7 +44,16 @@ function Details(props) {
     if (!props.userData.auth) {
         window.location = "/login";
     }
+    // if (formStep == detailForms.length) {
+    //     props.increaseStep({ value: 4 });
+    //     setformStep(4)
+    // console.log(formStep, detailForms.length)
+
+    //     // window.location = "/final"
+    //     return null;
+    // }
     return (
+
         <div className="container">
             <div className="d-flex">
                 <span onClick={(e) => { backFormHandler(e) }}><i className="fa-solid fa-arrow-left"></i></span>

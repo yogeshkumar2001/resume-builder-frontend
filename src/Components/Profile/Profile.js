@@ -1,15 +1,18 @@
-import React, { useEffect } from 'react'
-import UserImg from "../assests/images/default user.png"
+import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { increaseStep, setUserFormData, updateTemplateData } from '../../Redux/action'
+import { getSelectedResumesById, getUserResumesById } from '../API/ApiPaths'
 import { getCallAPI } from "../API/helper"
-import { getUserResumesById } from '../API/ApiPaths'
-import "./profile.css"
+import UserImg from "../assests/images/default user.png"
 import detailForms from '../formConfig/FormConfig'
-import { bindActionCreators } from 'redux';
-import { increaseStep, setUserFormData } from '../../Redux/action';
-import { useState } from 'react'
+import "./profile.css"
+import {  useNavigate } from 'react-router-dom'
 function Profile(props) {
     const [userResumes, setUserResumes] = React.useState([]);
+    const [formSelectionId, setFormSelectionId] = useState(0);
+    const [formData, setFormData] = useState(props.userDetails);
+    let navigate = useNavigate()
     let containerCss = {
         width: " 150px",
         // height: "100%",
@@ -23,9 +26,18 @@ function Profile(props) {
         let response = await getCallAPI({ path: tempPath });
         setUserResumes(response.data.data)
     }
+    async function handleTemplateSelection(e) {
+        let tempPath = getSelectedResumesById.replace("replace_id", e.target.id)
+        let response = await getCallAPI({ path: tempPath });
+        console.log(response.data)
+        props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id })
+        // navigate("/view-resume")
+        window.open("/view-resume","_blank")
+    }
     let containerHtml = userResumes.map((val) => {
-        return <div className="" style={{ ...containerCss }} id={val._id} skinId={val.skinId}>
-            <img src={val.skinPath} alt="" />
+        return <div className="template-profile" style={{ ...containerCss }} id={val._id} skinId={val.skinId} onClick={(e) => { handleTemplateSelection(e) }}>
+            <img src={val.skinPath} alt="" className="template-profile-image" />
+            {/* <button className='choose-template ' style={{left:"13%"}}>Select Template</button> */}
         </div>
     })
     let imgCss = {
@@ -43,8 +55,7 @@ function Profile(props) {
         "left": "18%",
         "fontSize": "xx-large",
     }
-    const [formSelectionId, setFormSelectionId] = useState(0);
-    const [formData, setFormData] = useState(props.userDetails);
+
     let formToDisplay = detailForms[formSelectionId];
 
     function handleInputChange(e) {
@@ -59,8 +70,8 @@ function Profile(props) {
         props.setUserFormData(formData)
     }
     if (!props.userData.auth) {
-         window.location = "/login";
-         return null;
+        window.location = "/login";
+        return null;
     }
     return (
         <div className="container mt-1">
@@ -138,7 +149,7 @@ function Profile(props) {
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        increaseStep, setUserFormData
+        increaseStep, setUserFormData, updateTemplateData
     }, dispatch);
 }
 

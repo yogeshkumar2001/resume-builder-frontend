@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux'
 import { setUserLoggedIn } from '../../Redux/action'
 
 function Navbar(props) {
-    console.log(props)
     function userLogOut() {
         props.setUserLoggedIn({ auth: false, id: null, name: null, email: null })
     }

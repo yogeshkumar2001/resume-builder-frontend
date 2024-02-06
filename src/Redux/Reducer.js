@@ -1,6 +1,6 @@
 let initialState = {
     choosedTemplate: {
-        id: null, path: null
+        id: null, path: null,resumeId:null
     },
     detailsStep: { value: 0 },
     userFormDetails: null,

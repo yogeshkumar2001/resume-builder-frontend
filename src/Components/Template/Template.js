@@ -14,7 +14,7 @@ import { connect } from 'react-redux'
 import {bindActionCreators} from "redux";
 import {useNavigate} from "react-router-dom"
 function Template({updateTemplateData,TemplateData}) {
-    let history  = useNavigate();
+    let navigate  = useNavigate();
     let skinsArr = [
         { id: "skin1", path: skin1 },
         { id: "skin2", path: skin2 },
@@ -29,7 +29,7 @@ function Template({updateTemplateData,TemplateData}) {
     function updateTemplateDataHandler(e){
         e.preventDefault();
         updateTemplateData({id:e.target.id , path:e.target.attributes[2].nodeValue});
-        history("/details")
+        navigate("/details")
     }    
     return (
         <div className="templates-container">

@@ -39,3 +39,11 @@ export function setUserLoggedIn(data) {
         })
     }
 }
+export function lastSelectedResume(data) {
+    return function (dispatch) {
+        dispatch({
+            type: "SET_LAST_RESUME",
+            payload: data
+        })
+    }
+}

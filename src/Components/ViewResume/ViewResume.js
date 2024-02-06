@@ -1,13 +1,15 @@
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Skin1 from '../Skins/Skin1';
-import "./final.css";
+// import "./final.css";
 import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
 import { toPng } from 'html-to-image';
-import { postCallAPI } from "../API/helper"
-import { saveResumePath } from '../API/ApiPaths';
+import { getCallAPI, postCallAPI } from "../API/helper"
+import { getSelectedResumesById, saveResumePath } from '../API/ApiPaths';
 import { successNotify } from '../Notify/notify';
-function Final(props) {
+import Loading from '../Loading/Loading';
+function ViewResume(props) {
+    const[userData,setUserData] = React.useState(null);
     const options = {
         // default is `save`
         method: 'open',
@@ -26,22 +28,11 @@ function Final(props) {
 
 
     };
-    // const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
-    const getTargetElement = () => document.getElementById('content-id');
-
-    function Handler() {
-        // toPng(pdfRef.current, { cacheBust: true, })
-        // .then((dataUrl) => {
-        //   const link = document.createElement('a')
-        //   link.download = 'my-image-name.png'
-        //   link.href = dataUrl
-        //   link.click()
-        // })
-        // .catch((err) => {
-        //   console.log(err)
-        // })
-    }
+    useEffect(async () => {
+        let response  = await getCallAPI({path:getSelectedResumesById.replace("replace_id" , props?.templateInfo?.resumeId)});
+        setUserData(JSON.parse(response.data.data.userDetails))
+    }, [])
     async function apiCall(obj) {
         let response = await postCallAPI({ path: saveResumePath, Data: obj })
         return response
@@ -57,8 +48,7 @@ function Final(props) {
         let resObj = await apiCall({ path: saveResumePath, Data: postData });
         let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
         let type = resObj.status == 200 ? "success" : "error"
-        successNotify(message,type)
-
+        successNotify(message, type)
     }
 
     return (
@@ -72,7 +62,7 @@ function Final(props) {
                 </button>
             </div>
             <div className="resume-template card-final mt-2">
-                <Skin1 userDetails={props.userDetails} targetRef={targetRef} ></Skin1>
+                {userData !=  null ? <Skin1 userDetails={userData} targetRef={targetRef} ></Skin1> : <Loading/>}
             </div>
         </div>
     );
@@ -82,4 +72,4 @@ function mapStateToProps(state) {
     return { userDetails: state.userFormDetails, templateInfo: state.choosedTemplate, userData: state.userLoggedIn };
 }
 
-export default connect(mapStateToProps, null)(Final);
+export default connect(mapStateToProps, null)(ViewResume);

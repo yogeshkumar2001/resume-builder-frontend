@@ -15,6 +15,9 @@ import { useEffect } from 'react';
 import { gapi } from "gapi-script";
 import { GAUTH_CLIENT_ID } from "./config"
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
+import ViewResume from './Components/ViewResume/ViewResume';
 function App(props) {
   console.log(props)
 
@@ -41,6 +44,9 @@ function App(props) {
     {
       path: "/template",
       element: <Template />
+    },{
+      path: "/view-resume",
+      element: <ViewResume />
     }, {
       path: "/details",
       element: <Details />
@@ -58,7 +64,7 @@ function App(props) {
       element: <SignUp />
     }
   ])
- 
+
   return (
 
     <div className="App">
@@ -70,6 +76,7 @@ function App(props) {
         </ol>
       </nav> */}
       <RouterProvider router={router}></RouterProvider>
+      <ToastContainer></ToastContainer>
     </div>
   );
 }
