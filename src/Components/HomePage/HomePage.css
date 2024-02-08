@@ -101,3 +101,8 @@
   background: -webkit-linear-gradient(left, rgba(72, 52, 212, 0.95), rgba(52, 31, 151, 0.95));
   background: linear-gradient(to right, rgba(72, 52, 212, 0.95), rgba(52, 31, 151, 0.95));
 }
+.mb-bg{
+  background-color: #192057 !important;
+  position: absolute;
+  left: 0;
+}

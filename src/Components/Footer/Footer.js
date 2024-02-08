@@ -1,15 +1,16 @@
 import React from 'react';
 import "./footer.css"
 import logo from "../assests/images/logo.png"
-const Footer = () => (
-  <footer className="footer-area bg-img">
-    <div className="footer-content-area spec">
+const Footer = () => {
+  let isMobile = window.matchMedia("(max-width: 500px)").matches;
+  return (<footer className={`${isMobile ? 'mb-bg mb-5' : " bg-img footer-area"}  `}>
+    <div className={` ${!isMobile? 'footer-content-area spec':'mt-5'}`}>
       <div className="container">
         <div className="row">
           <div className="col-12 col-lg-4 col-md-6">
             <div className="footer-copywrite-info">
               {/* Copywrite */}
-              <div className="d-flex flex-column justify-content-center align-items-start ml-5" data-wow-delay="0.2s">
+              <div className={`d-flex flex-column justify-content-center align-items-start ${isMobile ? '' : 'ml-5'}`} data-wow-delay="0.2s">
                 <div className="footer-logo">
                   <a href="#" className="d-flex justify-content-center align-items-center"><img src={logo} alt="logo" /> <span className="ml-1">Resume Builder</span></a>
                 </div>
@@ -18,7 +19,7 @@ const Footer = () => (
                 </p>
               </div>
               {/* Social Icon */}
-              <div className="fs-4 text-white d-flex gap-2 ml-5" data-wow-delay="0.4s">
+              <div className={`fs-4 text-white d-flex gap-2  ${isMobile ? '' : 'ml-5'}`} data-wow-delay="0.4s">
                 <a href="#"><i class="fa-brands fa-facebook"></i></a>
                 <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
                 <a href="#"><i class="fa-brands fa-google-plus-g"></i></a>
@@ -71,7 +72,7 @@ const Footer = () => (
         </div>
       </div>
     </div>
-  </footer>
-);
+  </footer>)
+}
 
 export default Footer;

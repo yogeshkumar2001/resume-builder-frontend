@@ -3,6 +3,7 @@ import "./skin1.css"
 function skin1(props) {
     let obj = props.userDetails;
     let skillsArr = props.userDetails?.skills?.split(",");
+    let softSkillsArr = props.userDetails?.softSkills?.split(",");
     let achievementArray = props.userDetails?.achievement?.split(",");
     return (
         <div className="container bg-white skin-container p-0" id='content-id' ref={props.targetRef}>
@@ -28,11 +29,9 @@ function skin1(props) {
                         <div className="text-white">
                             <div className="text-white">
                                 <div className="text-white">
-                                    <p>skin1</p>
-                                    <p>skin1</p>
-                                    <p>skin1</p>
-                                    <p>skin1</p>
-                                    <p>skin1</p>
+                                    {softSkillsArr?.map((v) => {
+                                        return <p>{v}</p>
+                                    })}
                                 </div>
                             </div>
                         </div>

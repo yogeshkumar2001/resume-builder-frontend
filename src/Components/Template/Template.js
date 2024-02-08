@@ -1,19 +1,19 @@
 import React from 'react'
 import skin1 from "../assests/images/skin1.png"
 import skin2 from "../assests/images/skin2.png"
-import skin3 from "../assests/images/skin3.svg"
-import skin4 from "../assests/images/skin4.svg"
-import skin5 from "../assests/images/skin5.svg"
+import skin3 from "../assests/images/skin3.png"
+import skin4 from "../assests/images/skin4.png"
+import skin5 from "../assests/images/skin5.png"
 import skin6 from "../assests/images/skin6.svg"
 import skin7 from "../assests/images/skin7.svg"
 import skin8 from "../assests/images/skin8.svg"
 import { Link } from 'react-router-dom'
 import "./template.css"
-import { updateTemplateData } from '../../Redux/action'
+import { updateTemplateData ,increaseStep } from '../../Redux/action'
 import { connect } from 'react-redux'
 import {bindActionCreators} from "redux";
 import {useNavigate} from "react-router-dom"
-function Template({updateTemplateData,TemplateData}) {
+function Template(props) {
     let navigate  = useNavigate();
     let skinsArr = [
         { id: "skin1", path: skin1 },
@@ -28,7 +28,8 @@ function Template({updateTemplateData,TemplateData}) {
 
     function updateTemplateDataHandler(e){
         e.preventDefault();
-        updateTemplateData({id:e.target.id , path:e.target.attributes[2].nodeValue});
+        props.updateTemplateData({id:e.target.id , path:e.target.attributes[2].nodeValue});
+        props.increaseStep({value:0})
         navigate("/details")
     }    
     return (
@@ -62,7 +63,7 @@ function Template({updateTemplateData,TemplateData}) {
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        updateTemplateData
+        updateTemplateData,increaseStep
     },dispatch)
 
 }

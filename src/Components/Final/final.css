@@ -9,8 +9,8 @@
 }
 
 .resume-template {
-  width: 80%;
-  max-width: 800px;
+  /* width: 80%;
+  max-width: 800px; */
   border: 1px solid #ccc;
   padding: 20px;
 }

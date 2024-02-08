@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import Skin1 from '../Skins/Skin1';
+import React, { useCallback, useRef } from 'react';
+import Skin1 from '../Skins/Skin3';
 import "./final.css";
 import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
@@ -26,7 +26,7 @@ function Final(props) {
 
 
     };
-    // const pdfRef = useRef();
+    const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
     const getTargetElement = () => document.getElementById('content-id');
 
@@ -59,7 +59,25 @@ function Final(props) {
         let type = resObj.status == 200 ? "success" : "error"
         successNotify(message,type)
 
-    }
+    } 
+    const onButtonClick = () => {
+        if (pdfRef.current === null) {
+         alert("null image")
+         return
+        }
+    
+        toPng(pdfRef.current, { cacheBust: true, })
+          .then((dataUrl) => {
+            const link = document.createElement('a')
+            link.download = 'my-image-name.png'
+            link.href = dataUrl
+            link.click()
+          })
+          .catch((err) => {
+            console.log(err)
+          })
+      }
+    
 
     return (
         <div className="resume-page">
@@ -67,12 +85,15 @@ function Final(props) {
                 <button className="btn-success btn border-0" onClick={() => { toPDF() }}>
                     Download
                 </button>
+                <button className="btn-success btn border-0" onClick={() => { onButtonClick() }}>
+                    Download Png
+                </button>
                 <button className="btn btn-primary" onClick={saveResumeHandler}>
                     Save
                 </button>
             </div>
-            <div className="resume-template card-final mt-2">
-                <Skin1 userDetails={props.userDetails} targetRef={targetRef} ></Skin1>
+            <div className="resume-template card-final mt-2 " >
+                <Skin1 userDetails={props.userDetails} targetRef={pdfRef} ></Skin1>
             </div>
         </div>
     );

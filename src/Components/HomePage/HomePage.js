@@ -19,11 +19,13 @@ function HomePage() {
             </div>
         </div>
     );
+    let isMobile = window.matchMedia("(max-width: 500px)").matches;
+// alert(screen.width)
     return (
         <div class="home-page">
             <div class="container text-center">
-                <div class="row align-items-start p-0 ">
-                    <div class="col p-5">
+                <div class={`${isMobile ? '' : 'row'} align-items-start p-0`}>
+                    <div class={`col ${isMobile ? 'p-3' : 'p-5'}`}>
                         <h1 className="text-start fs-1 fw-bold" style={{ "color": "#13287e" }}>Online Resume Builder With Creative Templates</h1>
                         <p className="text-start fs-4" style={{ "color": "#8888a7" }}>Our Perfect resume builder takes the hassle out of resume writing. Choose from several templates and follow easy prompts to create the perfect job-ready resume.</p>
                         <div class="row align-items-start justify-content-between">
