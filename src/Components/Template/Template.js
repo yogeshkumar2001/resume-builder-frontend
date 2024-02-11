@@ -4,9 +4,9 @@ import skin2 from "../assests/images/skin2.png"
 import skin3 from "../assests/images/skin3.png"
 import skin4 from "../assests/images/skin4.png"
 import skin5 from "../assests/images/skin5.png"
-import skin6 from "../assests/images/skin6.svg"
-import skin7 from "../assests/images/skin7.svg"
-import skin8 from "../assests/images/skin8.svg"
+import skin6 from "../assests/images/skin6.png"
+import skin7 from "../assests/images/skin7.png"
+import skin8 from "../assests/images/skin8.png"
 import { Link } from 'react-router-dom'
 import "./template.css"
 import { updateTemplateData ,increaseStep } from '../../Redux/action'

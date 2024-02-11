@@ -1,7 +1,7 @@
 import React from "react";
 import "./skin2.css";
 
-function Skin2(props) {
+function Skin3(props) {
     let obj = props.userDetails;
     let skillsArr = props.userDetails?.skills?.split(",");
     let softSkillsArr = props.userDetails?.softSkills?.split(",");
@@ -146,4 +146,4 @@ function Skin2(props) {
     );
 }
 
-export default Skin2;
+export default Skin3;
