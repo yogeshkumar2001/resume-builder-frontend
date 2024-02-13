@@ -1,13 +1,25 @@
-import React, { useCallback, useRef } from 'react';
-import Skin1 from '../Skins/Skin3';
+import React, { useCallback, useRef, useState } from 'react';
+import Skin1 from '../Skins/Skin1';
+import Skin2 from '../Skins/Skin2';
+// import Skin3 from '../Skins/Skin4';
+import Skin4 from '../Skins/Skin4';
+// import Skin5 from '../Skins/Skin5';
+// import Skin6 from '../Skins/Skin6';
+// import Skin7 from '../Skins/Skin7';
+// import Skin8 from '../Skins/Skin8';
 import "./final.css";
 import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
 import { toPng } from 'html-to-image';
 import { postCallAPI } from "../API/helper"
 import { saveResumePath } from '../API/ApiPaths';
-import { successNotify } from '../Notify/notify';
+import { notify } from '../Notify/notify';
+import Loading from "../Loading/Loading"
+import { getResumeTemplate } from '../Helper/helper';
+import { useEffect } from 'react';
 function Final(props) {
+
+    const [resumeImgUrl, setResumeImageUrl] = useState(null)
     const options = {
         // default is `save`
         method: 'open',
@@ -28,8 +40,10 @@ function Final(props) {
     };
     const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
-    const getTargetElement = () => document.getElementById('content-id');
 
+    useEffect(() => {
+        onButtonClick()
+    }, [])
     function Handler() {
         // toPng(pdfRef.current, { cacheBust: true, })
         // .then((dataUrl) => {
@@ -57,28 +71,39 @@ function Final(props) {
         let resObj = await apiCall({ path: saveResumePath, Data: postData });
         let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
         let type = resObj.status == 200 ? "success" : "error"
-        successNotify(message,type)
+        notify(message, type)
 
-    } 
+    }
+
     const onButtonClick = () => {
-        if (pdfRef.current === null) {
-         alert("null image")
-         return
+        let ele = document.getElementById(props.templateInfo.id);
+        console.log(ele)
+        if (ele === null) {
+            notify("something went wrong , please try again later", "error")
+            return;
         }
-    
-        toPng(pdfRef.current, { cacheBust: true, })
-          .then((dataUrl) => {
-            const link = document.createElement('a')
-            link.download = 'my-image-name.png'
-            link.href = dataUrl
-            link.click()
-          })
-          .catch((err) => {
-            console.log(err)
-          })
-      }
-    
 
+        toPng(ele, { cacheBust: true, })
+            .then((dataUrl) => {
+                const link = document.createElement('a')
+                link.download = 'resume.png'
+                link.href = dataUrl
+                setResumeImageUrl(dataUrl)
+                // link.click()
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    // if (!props.userData.auth) {
+    //     window.location = "/login";
+    // }
+
+    let SkinContainer = getResumeTemplate(props.templateInfo.id, props, targetRef);
+
+
+    let isMobile = window.matchMedia("(max-width:500px)").matches
     return (
         <div className="resume-page">
             <div className="resume-buttons">
@@ -93,7 +118,9 @@ function Final(props) {
                 </button>
             </div>
             <div className="resume-template card-final mt-2 " >
-                <Skin1 userDetails={props.userDetails} targetRef={pdfRef} ></Skin1>
+
+                {SkinContainer}
+                
             </div>
         </div>
     );

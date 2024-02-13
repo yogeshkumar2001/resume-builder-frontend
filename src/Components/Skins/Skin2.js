@@ -2,6 +2,7 @@ import React from "react";
 import "./skin2.css";
 
 function Skin2(props) {
+    console.log("skuoibhdfiwebfibwefbwef")
     let obj = props.userDetails;
     let skillsArr = props.userDetails?.skills?.split(",");
     let softSkillsArr = props.userDetails?.softSkills?.split(",");
@@ -19,12 +20,12 @@ function Skin2(props) {
                     zIndex: "9",
                     top: "2.5rem",
                     width: "90%",
-                    border: "2px solid #F9E4D4",
+                    border: "2px solid #BFDBC8",
                 }}
             >
                 <div
                     className="col w-100  h-50 d-flex justify-content-startn align-items-center fs-1 fs-bold"
-                    style={{ borderBottom: "2px solid #F9E4D4" }}
+                    style={{ borderBottom: "2px solid #BFDBC8" }}
                 >
                     <h1>
                         <span>{obj.fName}</span> <span>{obj.lName}</span>
@@ -45,16 +46,16 @@ function Skin2(props) {
                         fontSize: "11px",
                     }}
                 >
-                    <div className="h-100 w-100" style={{ backgroundColor: "#F9E4D4" }}>
+                    <div className="h-100 w-100" style={{ backgroundColor: "#BFDBC8" }}>
                         {obj.summary}
                     </div>
                 </div>
             </div>
             <div className="row m-0 h-100">
-                <div className="col-4" style={{ backgroundColor: "#F9E4D4" }}>
+                <div className="col-4" style={{ backgroundColor: "#BFDBC8" }}>
                     <div
                         className="left-container"
-                        style={{ backgroundColor: "#F9E4D4" }}
+                        style={{ backgroundColor: "#BFDBC8" }}
                     ></div>
                     <div className="left-container ">
                         <div className="h-10 bg-white text-center ">Skills</div>
@@ -90,7 +91,7 @@ function Skin2(props) {
 
                     </div>
                     <div className="container text-center left-container ">
-                        <div className="h-10" style={{ backgroundColor: "#F9E4D4" }}>
+                        <div className="h-10" style={{ backgroundColor: "#BFDBC8" }}>
                             School Education
                         </div>
                         <div className="text-start ml-3">
@@ -118,7 +119,7 @@ function Skin2(props) {
                     </div>
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem placeat quae ipsum reprehenderit quos deserunt reiciendis exercitationem, optio blanditiis voluptas sint ipsam cumque libero veniam quidem, voluptatum explicabo saepe. Quod veritatis dolorem ea error nemo ut reprehenderit pariatur necessitatibus. Eligendi.
                     <div className="container text-center left-container ">
-                        <div className="h-10" style={{ backgroundColor: "#F9E4D4" }}>
+                        <div className="h-10" style={{ backgroundColor: "#BFDBC8" }}>
                             Work
                         </div>
                         <div className="text-start ml-3">
@@ -153,7 +154,7 @@ function Skin2(props) {
                             </ul>
                         </div>
                     </div><div className="container text-center left-container ">
-                        <div className="h-10" style={{ backgroundColor: "#F9E4D4" }}>
+                        <div className="h-10" style={{ backgroundColor: "#BFDBC8" }}>
                             Achievements
                         </div>
                         <div className="text-start ml-3">

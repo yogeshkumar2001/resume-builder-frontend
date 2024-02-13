@@ -7,7 +7,10 @@ import { getCallAPI } from "../API/helper"
 import UserImg from "../assests/images/default user.png"
 import detailForms from '../formConfig/FormConfig'
 import "./profile.css"
-import {  useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
+import NoResumeImg from "../assests/images/profile-no-resume.jpg"
+
+
 function Profile(props) {
     const [userResumes, setUserResumes] = React.useState([]);
     const [formSelectionId, setFormSelectionId] = useState(0);
@@ -32,7 +35,7 @@ function Profile(props) {
         console.log(response.data)
         props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id })
         // navigate("/view-resume")
-        window.open("/view-resume","_blank")
+        window.open("/view-resume", "_blank")
     }
     let containerHtml = userResumes.map((val) => {
         return <div className="template-profile" style={{ ...containerCss }} id={val._id} skinId={val.skinId} onClick={(e) => { handleTemplateSelection(e) }}>
@@ -50,10 +53,7 @@ function Profile(props) {
         "border": "5px solid white"
     }
     let nameH1Css = {
-        "position": "absolute",
-        "top": "35%",
-        "left": "18%",
-        "fontSize": "xx-large",
+
     }
 
     let formToDisplay = detailForms[formSelectionId];
@@ -69,20 +69,21 @@ function Profile(props) {
         e.preventDefault();
         props.setUserFormData(formData)
     }
-    if (!props.userData.auth) {
-        window.location = "/login";
-        return null;
-    }
+    // if (!props.userData.auth) {
+    //     window.location = "/login";
+    //     return null;
+    // }
+    let isMobile = window.matchMedia("(max-width:500px)").matches;
     return (
         <div className="container mt-1">
             <div className="row" style={{ height: "100vh" }}>
-                <div className=" bg-primary" style={{ height: "35%" }}>
-                    <img src={UserImg} alt="" className='' style={{ ...imgCss }} />
-                    <h1 className="text-white" style={{ ...nameH1Css }}>Yogesh Singh</h1>
+                <div className=" bg-primary" style={{ height: isMobile ? "20%" : "35%" }}>
+                    <img src={UserImg} alt="" className='header-img' />
+                    <h1 className="text-white heading-heading">Yogesh Singh</h1>
                 </div>
                 <div className="profile-bg-img">
-                    <div className="d-flex mt-3 flex-row">
-                        <div className="w-25 mt-5  card  m-5">
+                    <div className={`${isMobile ? 'mt-3' : 'd-flex mt-3 flex-row'}`}>
+                        <div className={`${isMobile ? 'mt-5 card' : 'w-25 mt-5  card  m-5'}`}>
                             <div class="tab-container">
                                 <input class="tab tab--1" id="tab1" name="tab" type="radio" onClick={(e) => { formSelection(0) }} />
                                 <label for="tab1" class="tab_label">Contact  </label>
@@ -100,7 +101,7 @@ function Profile(props) {
                                 <div class="scroller"></div>
                             </div>
                         </div>
-                        <div className="w-75 card m-5">
+                        <div className={`${isMobile?'w-100 card ':'w-75 card m-5'}`}>
                             <form className="form-card" onSubmit={(e) => { saveFormData(e) }}>
 
                                 <div className="row justify-content-between text-left">
@@ -129,7 +130,7 @@ function Profile(props) {
                             </form>
                         </div>
                     </div>
-                    <div className="card  mt-0 ml-5 mb-0 mr-5">
+                    <div className={`${isMobile?'card':'card  mt-0 ml-5 mb-0 mr-5'}`}>
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <button class="nav-link active text-primary" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" style={{ border: "0px", borderBottom: "2px solid" }}>Resumes</button>
@@ -137,8 +138,8 @@ function Profile(props) {
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
-                            <div className="d-flex flex-wrap  overflow-auto" style={{ maxHeight: "45vh" }}>
-                                {containerHtml}
+                            <div className={`${isMobile?'d-flex flex-wrap overflow-auto justify-content-center':'d-flex flex-wrap overflow-auto'}`} style={{ maxHeight: "45vh" }}>
+                                {containerHtml.length == 0 ? <img src={NoResumeImg} style={{ height: "120px" }} className='ml-auto mr-auto' /> : containerHtml}
                             </div>
                         </div>
                     </div>

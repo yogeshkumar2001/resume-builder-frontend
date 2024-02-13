@@ -10,7 +10,6 @@ function Details(props) {
     const [formData, setFormData] = useState(props.userDetails);
     let formToDisplay = detailForms[formStep];
     let navigate = useNavigate();
-    console.log(formStep, detailForms.length)
     // props.increaseStep({ value:0});
     function nextFormHandler(e) {
         e.preventDefault();
@@ -41,9 +40,9 @@ function Details(props) {
         const { name, value } = e.target;
         setFormData((prevData) => ({ ...prevData, [name]: value }));
     }
-    if (!props.userData.auth) {
-        window.location = "/login";
-    }
+    // if (!props.userData.auth) {
+    //     window.location = "/login";
+    // }
     // if (formStep == detailForms.length) {
     //     props.increaseStep({ value: 4 });
     //     setformStep(4)
@@ -52,15 +51,16 @@ function Details(props) {
     //     // window.location = "/final"
     //     return null;
     // }
+    let isMobile = window.matchMedia("(max-width:500px)").matches;
     return (
 
         <div className="container">
             <div className="d-flex">
                 <span onClick={(e) => { backFormHandler(e) }}><i className="fa-solid fa-arrow-left"></i></span>
             </div>
-            <div className="row">
+            <div className={`${isMobile?'':'row'}`}>
                 <div className="col">
-                    <form className="form-card m-5 mt-2" onSubmit={(e) => { nextFormHandler(e) }}>
+                    <form className={`${isMobile?'form-card':'form-card m-5 mt-2'}`} onSubmit={(e) => { nextFormHandler(e) }}>
 
                         <div className="row justify-content-between text-left">
                             {Object.entries(formToDisplay).map(([key, value]) => (

@@ -71,30 +71,35 @@
   cursor: pointer;
 }
 
-.tab--1:checked ~ .indicator {
+.tab--1:checked~.indicator {
   top: 8px;
 }
 
-.tab--2:checked ~ .indicator {
+.tab--2:checked~.indicator {
   top: calc(34px * 2 + 2px);
 }
 
-.tab--3:checked ~ .indicator {
+.tab--3:checked~.indicator {
   top: calc(32px * 4 + 1px);
 }
-.tab--4:checked ~ .indicator {
+
+.tab--4:checked~.indicator {
   top: calc(47px * 4 + 1px);
 }
-.tab--5:checked ~ .indicator {
+
+.tab--5:checked~.indicator {
   top: calc(64px * 4 + 1px);
 }
+
 .template-profile {
   position: relative;
 }
 
 .template-profile-image {
-  width: 100%; /* or set a specific width */
-  height: auto; /* or set a specific height */
+  width: 100%;
+  /* or set a specific width */
+  height: auto;
+  /* or set a specific height */
   transition: opacity 0.3s ease;
 }
 
@@ -115,4 +120,45 @@
   cursor: pointer;
   font-size: 15px;
   width: 70%;
+}
+
+.header-img {
+  /* position: absolute;
+  border-radius: 10rem;
+  height: 10%;
+  left: 3%;
+  top: 25%;
+  border: 5px solid white; */
+  position: absolute;
+  border-radius: 10rem;
+  height: 30%;
+  /* width: 11%; */
+  left: 3%;
+  top: 25%;
+  border: 5px solid white;
+
+}
+
+.heading-heading {
+  position: absolute;
+  top: 35%;
+  left: 18%;
+  font-size: xx-large;
+}
+
+@media screen and (max-width:500px) {
+  .header-img {
+    height: 10%;
+  }
+
+  .heading-heading {
+    position: absolute;
+    top: 22%;
+    left: 28%;
+    font-size: xx-large;
+    color: black;
+  }
+  .form-1-custom{
+    
+  }
 }

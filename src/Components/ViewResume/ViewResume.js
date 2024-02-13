@@ -6,8 +6,9 @@ import generatePDF, { usePDF } from 'react-to-pdf';
 import { toPng } from 'html-to-image';
 import { getCallAPI, postCallAPI } from "../API/helper"
 import { getSelectedResumesById, saveResumePath } from '../API/ApiPaths';
-import { successNotify } from '../Notify/notify';
+import { notify } from '../Notify/notify';
 import Loading from '../Loading/Loading';
+import { getResumeTemplate } from '../Helper/helper';
 function ViewResume(props) {
     const[userData,setUserData] = React.useState(null);
     const options = {
@@ -48,8 +49,9 @@ function ViewResume(props) {
         let resObj = await apiCall({ path: saveResumePath, Data: postData });
         let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
         let type = resObj.status == 200 ? "success" : "error"
-        successNotify(message, type)
+        notify(message, type)
     }
+    let skinContainer = getResumeTemplate(props.templateInfo.id,props,targetRef)
 
     return (
         <div className="resume-page">
@@ -62,7 +64,7 @@ function ViewResume(props) {
                 </button>
             </div>
             <div className="resume-template card-final mt-2">
-                {userData !=  null ? <Skin1 userDetails={userData} targetRef={targetRef} ></Skin1> : <Loading/>}
+                {userData !=  null ? skinContainer : <Loading/>}
             </div>
         </div>
     );

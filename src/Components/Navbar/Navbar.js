@@ -22,7 +22,7 @@ function Navbar(props) {
             <a className="nav-link text-primary " href="/login">Login</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link text-primary " href="/login">Sign Up</a>
+            <a className="nav-link text-primary " href="/signup">Sign Up</a>
 
         </li>
     </>)

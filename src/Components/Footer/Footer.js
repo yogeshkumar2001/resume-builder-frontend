@@ -4,9 +4,9 @@ import logo from "../assests/images/logo.png"
 const Footer = () => {
   let isMobile = window.matchMedia("(max-width: 500px)").matches;
   return (<footer className={`${isMobile ? 'mb-bg mb-5' : " bg-img footer-area"}  `}>
-    <div className={` ${!isMobile? 'footer-content-area spec':'mt-5'}`}>
+    <div className={` ${!isMobile? 'footer-content-area spec':''}`}>
       <div className="container">
-        <div className="row">
+        <div className={`row ${isMobile? 'gap-7':'mt-5'}`}>
           <div className="col-12 col-lg-4 col-md-6">
             <div className="footer-copywrite-info">
               {/* Copywrite */}
@@ -65,7 +65,6 @@ const Footer = () => {
                 <p>Mailing Address: xx00 E. Union Ave</p>
                 <p>Suite 1100. Denver, CO 80237</p>
                 <p>+999 90932 627</p>
-                <p>support@yourdomain.com</p>
               </div>
             </div>
           </div>

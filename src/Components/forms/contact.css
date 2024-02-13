@@ -60,11 +60,21 @@ textarea:focus {
 .skin-img-container {
   height: 90%;
   width: 60%;
-  border-radius: 2rem;
+  border-radius: 1rem;
   border: 1px solid;
 }
 .skin-img-container img {
   height: 100%;
   width: 100%;
-  border-radius: 2rem;
+  border-radius: 1rem;
+}
+@media  screen and (max-width:500px) {
+  .skin-img-container {
+    height: 90%;
+    width: 100%;
+    border-radius: 0rem;
+    border: 0px solid;
+    margin-top: 10px;
+    margin-bottom: 15px;
+}
 }
