@@ -2,7 +2,6 @@ import React from "react";
 import "./skin2.css";
 
 function Skin2(props) {
-    console.log("skuoibhdfiwebfibwefbwef")
     let obj = props.userDetails;
     let skillsArr = props.userDetails?.skills?.split(",");
     let softSkillsArr = props.userDetails?.softSkills?.split(",");
@@ -11,7 +10,7 @@ function Skin2(props) {
     return (
         <div
             className="container bg-white skin-container p-0"
-            id="content-id"
+            id={props.id}
             ref={props.targetRef}
         >
             <div
@@ -117,7 +116,7 @@ function Skin2(props) {
                             </ul>
                         </div>
                     </div>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Rem placeat quae ipsum reprehenderit quos deserunt reiciendis exercitationem, optio blanditiis voluptas sint ipsam cumque libero veniam quidem, voluptatum explicabo saepe. Quod veritatis dolorem ea error nemo ut reprehenderit pariatur necessitatibus. Eligendi.
+                    
                     <div className="container text-center left-container ">
                         <div className="h-10" style={{ backgroundColor: "#BFDBC8" }}>
                             Work

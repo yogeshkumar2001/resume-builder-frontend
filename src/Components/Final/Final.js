@@ -41,21 +41,7 @@ function Final(props) {
     const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
 
-    useEffect(() => {
-        onButtonClick()
-    }, [])
-    function Handler() {
-        // toPng(pdfRef.current, { cacheBust: true, })
-        // .then((dataUrl) => {
-        //   const link = document.createElement('a')
-        //   link.download = 'my-image-name.png'
-        //   link.href = dataUrl
-        //   link.click()
-        // })
-        // .catch((err) => {
-        //   console.log(err)
-        // })
-    }
+    
     async function apiCall(obj) {
         let response = await postCallAPI({ path: saveResumePath, Data: obj })
         return response
@@ -88,20 +74,21 @@ function Final(props) {
                 const link = document.createElement('a')
                 link.download = 'resume.png'
                 link.href = dataUrl
-                setResumeImageUrl(dataUrl)
-                // link.click()
+                link.click()
             })
             .catch((err) => {
                 console.log(err)
             })
     }
 
-    // if (!props.userData.auth) {
-    //     window.location = "/login";
-    // }
-
-    let SkinContainer = getResumeTemplate(props.templateInfo.id, props, targetRef);
-
+    
+    let SkinContainer = <Loading />
+    SkinContainer = getResumeTemplate(props.templateInfo.id, props, targetRef);
+    console.log(props.userData.auth)
+    if (!props.userData.auth) {
+        window.location = "/login";
+        return;
+    }
 
     let isMobile = window.matchMedia("(max-width:500px)").matches
     return (
@@ -120,7 +107,7 @@ function Final(props) {
             <div className="resume-template card-final mt-2 " >
 
                 {SkinContainer}
-                
+
             </div>
         </div>
     );

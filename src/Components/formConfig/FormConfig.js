@@ -25,8 +25,8 @@ const educationForm = {
 const workForm = {
     "jobTitle": { label: "Job Title", type: "text" },
     "position": { label: "Position", type: "text" },
-    "city": { label: "City", type: "text" },
-    "state": { label: "State", type: "text" },
+    "jobCity": { label: "City", type: "text" },
+    "jobState": { label: "State", type: "text" },
     "companyName": { label: "Company Name", type: "text" },
     "aboutCompany": { label: "About Company", type: "text" },
     "workStarted": { label: "Work Started", type: "date" },

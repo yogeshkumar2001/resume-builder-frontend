@@ -1,27 +1,71 @@
 import React, { useState } from 'react'
 import { postCallAPI } from '../API/helper';
 import { createUser } from '../API/ApiPaths';
+import { connect } from 'react-redux';
+import { setUserLoggedIn } from "../../Redux/action.js";
+import { bindActionCreators } from "redux";
+import { googleUserVerify } from "../API/ApiPaths.js";
 // import "./signup.css"
-function SignUp() {
+import { notify } from "../Notify/notify.js"
+import { GoogleLogin } from '@react-oauth/google';
+import { GAUTH_CLIENT_ID } from "../../config.js"
+import logoImage from "../assests/images/new_resume_logo.png"
+function SignUp(props) {
 
-   async function saveFormData(e) {
+    async function saveFormData(e) {
         e.preventDefault();
         const formData = new FormData(e.target);
         let formDatObj = {};
-        formData.forEach((val,key)=>{
+        formData.forEach((val, key) => {
             formDatObj[key] = val;
         })
-        console.log(formDatObj)
-        if(formDatObj.password != formDatObj.confirmPassword) return "password not matched"
-        let responseData = await callAPI(formDatObj); 
-        console.log(responseData);
+        if (formDatObj.password != formDatObj.confirmPassword) return "password not matched"
+        let responseData = await callAPICustom(formDatObj);
+        console.log(responseData)
+        if (responseData.message == "User created successfully" && responseData.status == 200) {
+            props.setUserLoggedIn({ auth: true, id: responseData.data["_id"], name: responseData.data.name, email: responseData.data.email })
+            window.location = "/"
+        } else {
+            // setError("Please check your email or passowrd.").
+            notify("Please check your email or passowrd.", "error")
+        }
     }
-    async function callAPI(data){
-        let response  = await postCallAPI({path:createUser, Data:data});
+    async function callAPICustom(data) {
+        let response = await postCallAPI({ path: createUser, Data: data });
         return response;
+    }
+    async function callAPI(token) {
+        try {
+            let res = await postCallAPI({
+                path: googleUserVerify, Data: {
+                    idToken: token
+                }
+            });
+            if (res) {
+                return res;
+            }
+        } catch (error) {
+            return error
+        }
+    }
+
+    const onSuccessHandler = async (res) => {
+        let userdataObj = await callAPI(res.credential);
+        if (userdataObj.message == "Login user Successfully" && userdataObj.status == 200) {
+            props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email })
+            window.location = "/"
+        } else {
+            notify("Please check your email or passowrd.", "error")
+        }
+    }
+    const onFailureHandler = (res) => {
+        notify("Please check your email or passowrd.", "error")
     }
     return (
         <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto lg:py-0">
+            <div className="logo_container">
+                    <img src={logoImage} alt="" />
+                </div>
             <div className="w-full bg-white rounded-lg shadow border md:mt-0 sm:max-w-md xl:p-0">
                 <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                     <p className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
@@ -79,7 +123,7 @@ function SignUp() {
                                 required
                             />
                         </div>
-                        <div className="flex items-start">
+                        <div className="flex items-start mt-3">
                             <div className="flex items-center h-5">
                                 <input
                                     className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 bg-gray-700 border-gray-600 focus:ring-primary-600 ring-offset-gray-800"
@@ -108,11 +152,30 @@ function SignUp() {
                         >
                             Create an account
                         </button>
+                        <div className="separator">
+                            <hr className="line" />
+                            <span>Or</span>
+                            <hr className="line" />
+                        </div>
+                        <div className="d-flex justify-content-center w-100">
+                            <GoogleLogin
+                                clientId={GAUTH_CLIENT_ID}
+                                // buttonText="Login with Google"
+                                onSuccess={onSuccessHandler}
+                                onFailure={onFailureHandler}
+                            // cookiePolicy={'single_host_origin'}
+                            ></GoogleLogin>
+                        </div>
+                        <p className="note">Terms of use & Conditions</p>
                     </form>
                 </div>
             </div>
         </div>
     )
 }
-
-export default SignUp
+function mapDispatchToProps(dispatch) {
+    return bindActionCreators({
+        setUserLoggedIn
+    }, dispatch)
+}
+export default connect(null, mapDispatchToProps)(SignUp);

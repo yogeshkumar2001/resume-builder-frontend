@@ -6,7 +6,7 @@ function skin1(props) {
     let softSkillsArr = props.userDetails?.softSkills?.split(",");
     let achievementArray = props.userDetails?.achievement?.split(",");
     return (
-        <div className="skin-container bg-white  p-0" id={'myDiv'} ref={props.targetRef}>
+        <div className="skin-container bg-white  p-0" id={props.id} ref={props.targetRef}>
             <div className="header main-header">
                 <div className="d-flex ml-5" style={{ fontSize: "65px" }}>
                     <span className=''>{obj.fName}</span>
@@ -54,7 +54,7 @@ function skin1(props) {
                 </div>
                 <div className="col">
                     <div className="box  ">
-                        <h5 className="main-heading">Job Profile</h5>
+                        <h5 className="main-heading">Summary</h5>
                         <span><p>{obj.summary}</p></span>
                         <div className="d-flex justify-content-between">
                         </div>

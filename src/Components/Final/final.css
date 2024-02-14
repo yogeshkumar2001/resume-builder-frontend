@@ -55,10 +55,10 @@
   color: black;
 }
 
-.card-final:hover {
+/* .card-final:hover {
   border: 1px solid black;
   transform: scale(1.05);
-}
+} */
 .profile-bg-img{
   background: url("/public/profile-bg.png")  no-repeat center center;
   background-size: cover;

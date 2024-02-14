@@ -8,7 +8,8 @@ let initialState = {
         auth:false,
         id:null,
         name:null,
-        email:null
+        email:null,
+        profileImage:null
     }
 }
 const appReducer = function reduxReducer(state = initialState, action) {

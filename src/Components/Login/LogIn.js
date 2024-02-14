@@ -3,19 +3,13 @@ import "./login.css";
 import { GoogleLogin } from '@react-oauth/google';
 import { GAUTH_CLIENT_ID } from "../../config.js"
 import { postCallAPI } from "../API/helper.js";
-import { googleUserVerify } from "../API/ApiPaths.js";
+import { googleUserVerify, userLoginPath } from "../API/ApiPaths.js";
 import { setUserLoggedIn } from "../../Redux/action.js";
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { notify } from "../Notify/notify.js"
+import logoImage from "../assests/images/new_resume_logo.png"
 const LogIn = (props) => {
-    const [id, setId] = useState("");
-    const [pw, setPw] = useState("");
-
-    const onChangeHandler = (e) => {
-        const { id, value } = e.target;
-        id === "id" ? setId(value) : setPw(value);
-    };
-   
     async function callAPI(token) {
         try {
             let res = await postCallAPI({
@@ -30,22 +24,45 @@ const LogIn = (props) => {
             return error
         }
     }
-    
+
     const onSuccessHandler = async (res) => {
         let userdataObj = await callAPI(res.credential);
-        if(userdataObj.message=="Login user Successfully" && userdataObj.status==200){
-            props.setUserLoggedIn({auth:true,id:userdataObj.data["_id"],name:userdataObj.data.name,email:userdataObj.data.email})
-            window.location ="/"
+        if (userdataObj.message == "Login user Successfully" || userdataObj.message == "Login and created user Successfully" && userdataObj.status == 200) {
+            props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email,profileImage:userdataObj.data.imgUrl })
+            window.location = "/"
+        } else {
+           
+            notify("Please check your email or passowrd.", "error")
         }
     }
     const onFailureHandler = (res) => {
-        console.log("login failed" + res)
+        notify("Please check your email or passowrd.", "error")
     }
+    async function loginUser(e) {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        let tempObj = {};
+        formData.forEach((val, key) => {
+            tempObj[key] = val;
+        })
+        try {
+            let userdataObj = await postCallAPI({
+                path: userLoginPath, Data: {...tempObj}
+            });
+            props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email })
+            window.location = "/"
+        } catch (error) {
+            return error
+        }
 
+
+    }
     return (
         <div className="d-flex justify-content-center align-item-center">
-            <form className="form_container">
-                <div className="logo_container"></div>
+            <form className="form_container" onSubmit={(e) => { loginUser(e) }}>
+                <div className="logo_container">
+                    <img src={logoImage} alt="" />
+                </div>
                 <div className="title_container">
                     <p className="title">Login to your Account</p>
                     <span className="subtitle">Get started with our app, just create an account and enjoy the experience.</span>
@@ -60,10 +77,10 @@ const LogIn = (props) => {
                     <input
                         placeholder="name@mail.com"
                         title="Input title"
-                        name="input-name"
+                        name="email"
                         type="text"
                         className="input_field_login"
-                        id="email_field"
+                        id="email"
                     />
                 </div>
                 <div className="input_container">
@@ -76,10 +93,10 @@ const LogIn = (props) => {
                     <input
                         placeholder="Password"
                         title="Input title"
-                        name="input-name"
+                        name="password"
                         type="password"
                         className="input_field_login"
-                        id="password_field"
+                        id="password"
                     />
                 </div>
                 <button title="Sign In" type="submit" className="sign-in_btn">

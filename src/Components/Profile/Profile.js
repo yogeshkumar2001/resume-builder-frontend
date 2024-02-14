@@ -9,6 +9,7 @@ import detailForms from '../formConfig/FormConfig'
 import "./profile.css"
 import { useNavigate } from 'react-router-dom'
 import NoResumeImg from "../assests/images/profile-no-resume.jpg"
+import { notify } from '../Notify/notify'
 
 
 function Profile(props) {
@@ -34,7 +35,6 @@ function Profile(props) {
         let response = await getCallAPI({ path: tempPath });
         console.log(response.data)
         props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id })
-        // navigate("/view-resume")
         window.open("/view-resume", "_blank")
     }
     let containerHtml = userResumes.map((val) => {
@@ -43,19 +43,6 @@ function Profile(props) {
             {/* <button className='choose-template ' style={{left:"13%"}}>Select Template</button> */}
         </div>
     })
-    let imgCss = {
-        "position": "absolute",
-        "borderRadius": "10rem",
-        "height": "30%",
-        /* width: 11%; */
-        "left": "3%",
-        "top": " 25%",
-        "border": "5px solid white"
-    }
-    let nameH1Css = {
-
-    }
-
     let formToDisplay = detailForms[formSelectionId];
 
     function handleInputChange(e) {
@@ -68,18 +55,20 @@ function Profile(props) {
     function saveFormData(e) {
         e.preventDefault();
         props.setUserFormData(formData)
+        notify("Data saved succesfully" ,"success")
     }
-    // if (!props.userData.auth) {
-    //     window.location = "/login";
-    //     return null;
-    // }
+    if (!props.userData.auth) {
+        window.location = "/login";
+        return;
+    }
     let isMobile = window.matchMedia("(max-width:500px)").matches;
+    console.log(props)
     return (
         <div className="container mt-1">
             <div className="row" style={{ height: "100vh" }}>
                 <div className=" bg-primary" style={{ height: isMobile ? "20%" : "35%" }}>
-                    <img src={UserImg} alt="" className='header-img' />
-                    <h1 className="text-white heading-heading">Yogesh Singh</h1>
+                    <img src={props.userData.profileImage ?props.userData.profileImage:UserImg} alt="" className='header-img' />
+                    <h1 className="text-white heading-heading">{props.userData.name}</h1>
                 </div>
                 <div className="profile-bg-img">
                     <div className={`${isMobile ? 'mt-3' : 'd-flex mt-3 flex-row'}`}>
@@ -101,7 +90,7 @@ function Profile(props) {
                                 <div class="scroller"></div>
                             </div>
                         </div>
-                        <div className={`${isMobile?'w-100 card ':'w-75 card m-5'}`}>
+                        <div className={`${isMobile ? 'w-100 card ' : 'w-75 card m-5'}`}>
                             <form className="form-card" onSubmit={(e) => { saveFormData(e) }}>
 
                                 <div className="row justify-content-between text-left">
@@ -130,7 +119,7 @@ function Profile(props) {
                             </form>
                         </div>
                     </div>
-                    <div className={`${isMobile?'card':'card  mt-0 ml-5 mb-0 mr-5'}`}>
+                    <div className={`${isMobile ? 'card' : 'card  mt-0 ml-5 mb-0 mr-5'}`}>
                         <nav>
                             <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                 <button class="nav-link active text-primary" id="nav-home-tab" data-bs-toggle="tab" data-bs-target="#nav-home" type="button" role="tab" aria-controls="nav-home" aria-selected="true" style={{ border: "0px", borderBottom: "2px solid" }}>Resumes</button>
@@ -138,7 +127,7 @@ function Profile(props) {
                             </div>
                         </nav>
                         <div class="tab-content" id="nav-tabContent">
-                            <div className={`${isMobile?'d-flex flex-wrap overflow-auto justify-content-center':'d-flex flex-wrap overflow-auto'}`} style={{ maxHeight: "45vh" }}>
+                            <div className={`${isMobile ? 'd-flex flex-wrap overflow-auto justify-content-center' : 'd-flex flex-wrap overflow-auto'}`} style={{ maxHeight: "45vh" }}>
                                 {containerHtml.length == 0 ? <img src={NoResumeImg} style={{ height: "120px" }} className='ml-auto mr-auto' /> : containerHtml}
                             </div>
                         </div>
