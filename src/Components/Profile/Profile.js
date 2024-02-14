@@ -31,10 +31,12 @@ function Profile(props) {
         setUserResumes(response.data.data)
     }
     async function handleTemplateSelection(e) {
+        console.log(e.target)
+        console.log(e.target.attributes.skinid.value)
         let tempPath = getSelectedResumesById.replace("replace_id", e.target.id)
         let response = await getCallAPI({ path: tempPath });
         console.log(response.data)
-        props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id })
+        props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id , id:e.target.attributes.skinid.value})
         window.open("/view-resume", "_blank")
     }
     let containerHtml = userResumes.map((val) => {

@@ -11,6 +11,9 @@ import Loading from '../Loading/Loading';
 import { getResumeTemplate } from '../Helper/helper';
 function ViewResume(props) {
     const[userData,setUserData] = React.useState(null);
+   React.useEffect(()=>{
+        callAPI()
+   },[])
     const options = {
         // default is `save`
         method: 'open',
@@ -26,45 +29,42 @@ function ViewResume(props) {
             // default is 'portrait'
         },
 
-
-
     };
+    
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
-    useEffect(async () => {
+   
+    async function callAPI(){
+        console.log("ergerg")
         let response  = await getCallAPI({path:getSelectedResumesById.replace("replace_id" , props?.templateInfo?.resumeId)});
         setUserData(JSON.parse(response.data.data.userDetails))
-    }, [])
-    async function apiCall(obj) {
-        let response = await postCallAPI({ path: saveResumePath, Data: obj })
-        return response
+        console.log(JSON.parse(response.data.data.userDetails))
     }
-    async function saveResumeHandler() {
+    async function deleteResumeHandler() {
 
-        let postData = {
-            skinId: props.templateInfo.id,
-            skinPath: props.templateInfo.path,
-            userDetails: JSON.stringify(props.userDetails),
-            userId: props.userData.id
-        }
-        let resObj = await apiCall({ path: saveResumePath, Data: postData });
-        let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
-        let type = resObj.status == 200 ? "success" : "error"
-        notify(message, type)
     }
-    let skinContainer = getResumeTemplate(props.templateInfo.id,props,targetRef)
-
+    console.log(props)
+    if (!props.userData.auth) {
+        window.location = "/login";
+        return;
+    }
+    let userDataObj = {
+        userDetails:userData,templateInfo:{id:props?.templateInfo?.resumeId}
+    }
+    let skinContainer =<Loading></Loading>
+    skinContainer = userData && getResumeTemplate(props.templateInfo.id,userDataObj,targetRef)
+   
     return (
         <div className="resume-page">
             <div className="resume-buttons">
                 <button className="btn-success btn border-0" onClick={() => { toPDF() }}>
                     Download
                 </button>
-                <button className="btn btn-primary" onClick={saveResumeHandler}>
-                    Save
+                <button className="btn btn-danger" onClick={deleteResumeHandler}>
+                    Delete
                 </button>
             </div>
             <div className="resume-template card-final mt-2">
-                {userData !=  null ? skinContainer : <Loading/>}
+                {skinContainer }
             </div>
         </div>
     );
