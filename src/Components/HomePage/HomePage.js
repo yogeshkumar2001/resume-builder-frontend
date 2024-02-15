@@ -54,7 +54,7 @@ function HomePage() {
                     <ServiceItem
                         iconSrc="/c2.png"
                         title="Creative, Modern and Clean Templates Designs"
-                        description=" Stand out from the crowd with our creative, modern, and clean templates. Our designs are tailored to reflect your professionalism and personality."
+                        description="  Stand out from the crowd with our creative, modern, and clean templates. Our designs are tailored to reflect your professionalism and personality helps to grow in career."
                         delay="0.3s"
                     />
                     <ServiceItem

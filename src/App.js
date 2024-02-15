@@ -18,8 +18,8 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 import ViewResume from './Components/ViewResume/ViewResume';
+import SharedResume from './Components/SharedResume/SharedResume';
 function App(props) {
-  console.log(props)
 
   useEffect(() => {
     function start() {
@@ -62,6 +62,9 @@ function App(props) {
     }, {
       path: "/signup",
       element: <SignUp />
+    },{
+      path: "/shared_resume",
+      element: <SharedResume />
     }
   ])
 

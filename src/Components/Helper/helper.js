@@ -14,7 +14,7 @@ export function getResumeTemplate( id,props, pdfRef) {
         case "skin1": return <Skin1 id= {props.templateInfo.id} userDetails={props.userDetails} targetRef={pdfRef} />
         case "skin2": return <Skin2 id= {props.templateInfo.id}userDetails={props.userDetails} targetRef={pdfRef} />
         case "skin4": return <Skin4  id= {props.templateInfo.id} userDetails={props.userDetails} targetRef={pdfRef} />
-        default: return <Loading></Loading>
+        default: return <Skin1 id= {props.templateInfo.id} userDetails={props.userDetails} targetRef={pdfRef} />
 
     }
 }

@@ -23,6 +23,7 @@ const appReducer = function reduxReducer(state = initialState, action) {
         case "USER_DETAILS":
             return { ...state, userFormDetails: action.payload }
         case "SET_USER_AUTH": return { ...state, userLoggedIn: action.payload }
+        case "RESET_REDUX": return { ...state, userLoggedIn: action.payload }
         default:
             return state;
     }

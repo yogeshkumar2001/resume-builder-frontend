@@ -19,7 +19,10 @@ function SignUp(props) {
         formData.forEach((val, key) => {
             formDatObj[key] = val;
         })
-        if (formDatObj.password != formDatObj.confirmPassword) return "password not matched"
+        if (formDatObj.password != formDatObj.confirmPassword){
+            notify("passwords not matched","warning")
+            return;
+        }
         let responseData = await callAPICustom(formDatObj);
         console.log(responseData)
         if (responseData.message == "User created successfully" && responseData.status == 200) {

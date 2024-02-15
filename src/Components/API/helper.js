@@ -7,7 +7,8 @@ export const getCallAPI = async ({ path, params = null }) => {
         return res;
     }
     catch (error) {
-        return error
+        console.error("Error in getCallAPI:", error);
+        throw error; // Re-throw the error to handle it elsewhere if needed
     }
 }
 export const postCallAPI = async ({ path, Data }) => {
@@ -25,3 +26,16 @@ export const postCallAPI = async ({ path, Data }) => {
         throw error; // Re-throw the error to handle it elsewhere if needed
     }
 };
+export const deleteCallAPI = async ({path})=>{
+    if (!path) {
+        return "required path for delete call";
+    }
+    let apiPath = APIURL+path;
+    try{
+        let response = await axios.delete(apiPath);
+        return response.data;
+    }catch (error) {
+        console.error("Error in deleteCallAPI:", error);
+        throw error; // Re-throw the error to handle it elsewhere if needed
+    }
+}

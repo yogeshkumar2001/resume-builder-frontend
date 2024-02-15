@@ -1,7 +1,7 @@
 import React from "react";
 import "./skin2.css";
 
-function Skin3(props) {
+function Skin4(props) {
     let obj = props.userDetails;
     let skillsArr = props.userDetails?.skills?.split(",");
     let softSkillsArr = props.userDetails?.softSkills?.split(",");
@@ -10,7 +10,7 @@ function Skin3(props) {
     return (
         <div
             className="container bg-white skin-container p-0"
-            id="content-id"
+            id={props.id}
             ref={props.targetRef}
         >
             <div
@@ -146,4 +146,4 @@ function Skin3(props) {
     );
 }
 
-export default Skin3;
+export default Skin4;

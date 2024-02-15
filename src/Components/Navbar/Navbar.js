@@ -2,12 +2,19 @@ import React from 'react'
 import "./Navbar.css"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { setUserLoggedIn } from '../../Redux/action'
+import { setUserLoggedIn, increaseStep, setUserFormData, updateTemplateData } from '../../Redux/action'
 import logoImage from "../assests/images/new_resume_logo.png"
 
 function Navbar(props) {
-    function userLogOut() {
-        props.setUserLoggedIn({ auth: false, id: null, name: null, email: null })
+
+    function userLogOut(e) {
+        e.preventDefault();
+        // Clear Redux state
+        props.updateTemplateData({ id: null, resumeId: null, path: null });
+        props.setUserFormData(null);
+        props.increaseStep({ value: 0 });
+        props.setUserLoggedIn({ auth: false, id: null, name: null, email: null });
+        window.location="/login"
     }
     let loggedInNavbar = (<>
         <li className="nav-item">
@@ -41,7 +48,9 @@ function Navbar(props) {
             <a className="nav-link text-primary" href="/profile">Profile</a>
         </li>
         <li className="nav-item">
-            <a className="nav-link text-primary " href="/" onClick={userLogOut}>Log Out</a>
+            <span className="nav-link text-primary " onClick={(e) => {
+                userLogOut(e)
+            }}>Log Out</span>
         </li>
     </>)
     function isMobile() {
@@ -49,20 +58,14 @@ function Navbar(props) {
         return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(userAgent);
     }
 
-    // Example usage
-    if (isMobile()) {
-        console.log("Device is mobile");
-    } else {
-        console.log("Device is desktop");
-    }
     return (
         <>
             {isMobile() ? <nav nav className="navbar " >
                 <div className="container-fluid">
-                <a className="navbar-brand text-primary d-flex align-items-center" href="/" >
-                            <img src={logoImage} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" />
-                            Resume Builder
-                        </a>
+                    <a className="navbar-brand text-primary d-flex align-items-center" href="/" >
+                        <img src={logoImage} alt="Logo" width="30" height="30" className="d-inline-block align-text-top" />
+                        Resume Builder
+                    </a>
                     <button className="navbar-toggler text-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasDarkNavbar" aria-controls="offcanvasDarkNavbar" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon text-primary"></span>
                     </button>
@@ -108,7 +111,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return bindActionCreators({
-        setUserLoggedIn
+        setUserLoggedIn, increaseStep, setUserFormData, updateTemplateData
     }, dispatch)
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar)

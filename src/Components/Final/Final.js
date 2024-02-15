@@ -12,14 +12,15 @@ import { connect } from 'react-redux';
 import generatePDF, { usePDF } from 'react-to-pdf';
 import { toPng } from 'html-to-image';
 import { postCallAPI } from "../API/helper"
-import { saveResumePath } from '../API/ApiPaths';
+import { getSelectedResumesById, saveResumePath } from '../API/ApiPaths';
 import { notify } from '../Notify/notify';
 import Loading from "../Loading/Loading"
 import { getResumeTemplate } from '../Helper/helper';
 import { useEffect } from 'react';
+import mobilePdfImage from "../assests/images/mobile_pdf_download.png"
 function Final(props) {
 
-    const [resumeImgUrl, setResumeImageUrl] = useState(null)
+    const [resumeUrl, setResumeUrl] = useState(null)
     const options = {
         // default is `save`
         method: 'open',
@@ -41,7 +42,7 @@ function Final(props) {
     const pdfRef = useRef();
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
 
-    
+
     async function apiCall(obj) {
         let response = await postCallAPI({ path: saveResumePath, Data: obj })
         return response
@@ -57,13 +58,15 @@ function Final(props) {
         let resObj = await apiCall({ path: saveResumePath, Data: postData });
         let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
         let type = resObj.status == 200 ? "success" : "error"
+        if (resObj.status == 200) {
+            setResumeUrl(window.origin + "/shared_resume?resumeId=" + resObj.data["_id"]);
+        }
         notify(message, type)
 
     }
 
     const onButtonClick = () => {
         let ele = document.getElementById(props.templateInfo.id);
-        console.log(ele)
         if (ele === null) {
             notify("something went wrong , please try again later", "error")
             return;
@@ -81,33 +84,61 @@ function Final(props) {
             })
     }
 
-    
+
     let SkinContainer = <Loading />
     SkinContainer = getResumeTemplate(props.templateInfo.id, props, targetRef);
-    console.log(props.userData.auth)
-    if (!props.userData.auth) {
-        window.location = "/login";
-        return;
-    }
+    // if (!props.userData.auth) {
+    //     window.location = "/login";
+    //     return;
+    // }
 
     let isMobile = window.matchMedia("(max-width:500px)").matches
+    const handleCopyLink = () => {
+        const resumeLink = resumeUrl; // Replace with your dynamic link
+        navigator.clipboard.writeText(resumeLink)
+            .then(() => {
+                notify('Link copied to clipboard', "success")
+            })
+            .catch((error) => {
+                notify('Failed to copy link', "error");
+                // You can show an error message to the user if needed
+            });
+    };
+    let CustomWidth = isMobile ? '100vw' : '50vw'
+    function pdfHandler() {
+        document.getElementById("resume-container").classList.toggle("d-none");
+        toPDF()
+        document.getElementById("resume-container").classList.toggle("d-none");
+    }
     return (
         <div className="resume-page">
             <div className="resume-buttons">
-                <button className="btn-success btn border-0" onClick={() => { toPDF() }}>
-                    Download
+
+                <button className="btn-success btn border-0" onClick={() => { pdfHandler() }}>
+                    Download PDF
                 </button>
                 <button className="btn-success btn border-0" onClick={() => { onButtonClick() }}>
-                    Download Png
+                    Download Image
                 </button>
                 <button className="btn btn-primary" onClick={saveResumeHandler}>
                     Save
                 </button>
             </div>
-            <div className="resume-template card-final mt-2 " >
-
+            {resumeUrl && <div className="card mb-1" style={{ background: "transparent", width: CustomWidth }}>
+                <div className="fs-4">Share your resume </div>
+                <div className="d-flex justify-content-between" style={{ backgroundColor: "#eaefff" }}>
+                    <div className="text-start align-items-center d-flex text-primary pl-2" style={{ width: "100%", fontSize: "14px", cursor: "pointer" }} onClick={(e) => { handleCopyLink() }}>{resumeUrl}</div>
+                    <button className='btn btn-sm btn-primary m-1' onClick={(e) => { handleCopyLink() }}>Copy</button>
+                </div>
+            </div>}
+            {isMobile ? <div className="card mb-1" style={{ width: CustomWidth }}>
+                <div className="fs-4">For preview download your resume. 🚀</div>
+                <div className="d-flex justify-content-between" style={{ backgroundColor: "#eaefff" }}>
+                   <img src={mobilePdfImage }alt="" />
+                </div>
+            </div> : ''}
+            <div className={`resume-template card-final mt-2 ${isMobile ? 'd-none' : ''}`} id="resume-container">
                 {SkinContainer}
-
             </div>
         </div>
     );

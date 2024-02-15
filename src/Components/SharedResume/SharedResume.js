@@ -10,10 +10,14 @@ import { notify } from '../Notify/notify';
 import Loading from '../Loading/Loading';
 import { getResumeTemplate } from '../Helper/helper';
 function ViewResume(props) {
-    const[userData,setUserData] = React.useState(null);
-   React.useEffect(()=>{
-        callAPI()
-   },[])
+    const [userData, setUserData] = React.useState(null);
+    React.useEffect(() => {
+        let queryParams = new URLSearchParams(window.location.search);
+        let id = queryParams.get('resumeId');
+        // setUserData(id);
+        // console.log(userData,id)
+        callAPI(id)
+    }, [])
     const options = {
         // default is `save`
         method: 'open',
@@ -30,28 +34,28 @@ function ViewResume(props) {
         },
 
     };
-    
+
     const { toPDF, targetRef } = usePDF({ filename: 'resume.pdf', options: options });
-   
-    async function callAPI(){
-        let response  = await getCallAPI({path:getSelectedResumesById.replace("replace_id" , props?.templateInfo?.resumeId)});
-        setUserData(JSON.parse(response.data.data.userDetails))
+
+    async function callAPI(id) {
+        let response = await getCallAPI({ path: getSelectedResumesById.replace("replace_id", id != null ? id : '') });
+        setUserData(response.data.data)
     }
-    async function deleteResumeHandler() {
-        let deletedObj = await  deleteCallAPI({path:deleteResumesById.replace("replace_id",props?.templateInfo?.resumeId)})
-        window.close()
+
+    // if (!props.userData.auth) {
+    //     window.location = "/login";
+    //     return;
+    // }
+    let userDataObj = {}
+    if (userData) {
+        userDataObj = {
+            userDetails: JSON.parse(userData?.userDetails), templateInfo: {id:userData?.["_id"]}
+        }
     }
-    if (!props.userData.auth) {
-        window.location = "/login";
-        return;
-    }
-    let userDataObj = {
-        userDetails:userData,templateInfo:{id:props?.templateInfo?.resumeId}
-    }
-    let skinContainer =<Loading></Loading>
-    skinContainer = userData && getResumeTemplate(props.templateInfo.id,userDataObj,targetRef)
+    let skinContainer = <Loading></Loading>
+    skinContainer = userData && getResumeTemplate(userData.skinId, userDataObj, targetRef)
     const onButtonClick = () => {
-        let ele = document.getElementById(props?.templateInfo?.resumeId);
+        let ele = document.getElementById(userData?.["_id"]);
         if (ele === null) {
             notify("something went wrong , please try again later", "error")
             return;
@@ -77,17 +81,19 @@ function ViewResume(props) {
         <div className="resume-page">
             <div className="resume-buttons">
                 <button className="btn-success btn border-0" onClick={() => { pdfHandler() }}>
-                    Download
+                    Download PDF
                 </button>
                 <button className="btn-success btn border-0" onClick={() => { onButtonClick() }}>
                     Download Image
                 </button>
-                <button className="btn btn-danger" onClick={deleteResumeHandler}>
+                {/* <button className="btn btn-danger" onClick={deleteResumeHandler}>
                     Delete
-                </button>
+                </button> */}
             </div>
+
             <div className="resume-template card-final mt-2" id="resume-container">
-                {skinContainer }
+                {/* <Skin1></Skin1> */}
+                {skinContainer}
             </div>
         </div>
     );
