@@ -1,1 +1,1 @@
-export const APIURL = "http://localhost:4000"
+export const APIURL = "https://resume-builder-backend-1y1f.onrender.com"

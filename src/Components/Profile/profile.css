@@ -11,7 +11,10 @@
   color: #888;
   text-align: center;
 }
+.blue-background {
 
+  background-image: linear-gradient(blue 82%, transparent 18%); /* Apply linear gradient background */
+}
 .tab-container {
   position: relative;
   display: flex;
@@ -129,12 +132,12 @@
   left: 3%;
   top: 25%;
   border: 5px solid white; */
-  position: absolute;
-  border-radius: 10rem;
-  height: 30%;
+  /* position: absolute; */
+  border-radius: 3rem;
+  /* height: 50%; */
   /* width: 11%; */
-  left: 3%;
-  top: 25%;
+  /* left: 3%;
+  top: 25%; */
   border: 5px solid white;
 
 }
@@ -146,19 +149,3 @@
   font-size: xx-large;
 }
 
-@media screen and (max-width:500px) {
-  .header-img {
-    height: 10%;
-  }
-
-  .heading-heading {
-    position: absolute;
-    top: 22%;
-    left: 28%;
-    font-size: xx-large;
-    color: black;
-  }
-  .form-1-custom{
-    
-  }
-}

@@ -25,7 +25,7 @@ function SignUp(props) {
         }
         let responseData = await callAPICustom(formDatObj);
         console.log(responseData)
-        if (responseData.message == "User created successfully" && responseData.status == 200) {
+        if ( responseData.status == 201) {
             props.setUserLoggedIn({ auth: true, id: responseData.data["_id"], name: responseData.data.name, email: responseData.data.email })
             window.location = "/"
         } else {

@@ -33,7 +33,7 @@ function Profile(props) {
     async function handleTemplateSelection(e) {
         let tempPath = getSelectedResumesById.replace("replace_id", e.target.id)
         let response = await getCallAPI({ path: tempPath });
-        props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id , id:e.target.attributes.skinid.value})
+        props.updateTemplateData({ ...props.TemplateData, resumeId: e.target.id, id: e.target.attributes.skinid.value })
         window.open("/view-resume", "_blank")
     }
     let containerHtml = userResumes.map((val) => {
@@ -54,20 +54,25 @@ function Profile(props) {
     function saveFormData(e) {
         e.preventDefault();
         props.setUserFormData(formData)
-        notify("Data saved succesfully" ,"success")
+        notify("Data saved succesfully", "success")
     }
     if (!props.userData.auth) {
         window.location = "/login";
         return;
     }
     let isMobile = window.matchMedia("(max-width:500px)").matches;
-    
+
     return (
         <div className="container mt-1">
             <div className="row" style={{ height: "100vh" }}>
-                <div className=" bg-primary" style={{ height: isMobile ? "20%" : "35%" }}>
-                    <img src={props.userData.profileImage ?props.userData.profileImage:UserImg} alt="" className='header-img' />
-                    <h1 className="text-white heading-heading">{props.userData.name}</h1>
+                <div className=" w-100 d-flex  blue-background" style={{ height: isMobile ? "20%" : "35%" }}>
+                    <div className="h-100 d-flex justify-content-end align-items-end" style={{width:"15%"}}>
+                        <img src={props.userData.profileImage ? props.userData.profileImage : UserImg} alt="" className='header-img' />
+                    </div>
+                    <div className="w-75 d-flex justify-content-start align-items-end">
+
+                        <h1 className="text-white fs-1 ml-2" style={{marginBottom:"2.5rem"}}>{props.userData.name}</h1>
+                    </div>
                 </div>
                 <div className="profile-bg-img">
                     <div className={`${isMobile ? 'mt-3' : 'd-flex mt-3 flex-row'}`}>

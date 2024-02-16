@@ -56,9 +56,9 @@ function Final(props) {
             userId: props.userData.id
         }
         let resObj = await apiCall({ path: saveResumePath, Data: postData });
-        let message = resObj.status == 200 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
-        let type = resObj.status == 200 ? "success" : "error"
-        if (resObj.status == 200) {
+        let message = resObj.status == 201 ? "Resume Saved Successfully" : "Failed to save resume, Please try again in sometimes."
+        let type = resObj.status == 201 ? "success" : "error"
+        if (resObj.status == 201) {
             setResumeUrl(window.origin + "/shared_resume?resumeId=" + resObj.data["_id"]);
         }
         notify(message, type)
@@ -95,32 +95,48 @@ function Final(props) {
     let isMobile = window.matchMedia("(max-width:500px)").matches
     const handleCopyLink = () => {
         const resumeLink = resumeUrl; // Replace with your dynamic link
-        navigator.clipboard.writeText(resumeLink)
-            .then(() => {
-                notify('Link copied to clipboard', "success")
-            })
-            .catch((error) => {
-                notify('Failed to copy link', "error");
-                // You can show an error message to the user if needed
-            });
+    
+        // Create a temporary input element
+        const tempInput = document.createElement('input');
+        tempInput.value = resumeLink;
+        document.body.appendChild(tempInput);
+    
+        // Select the text in the input
+        tempInput.select();
+        tempInput.setSelectionRange(0, 99999); // For mobile devices
+    
+        // Copy the selected text
+        document.execCommand('copy');
+    
+        // Remove the temporary input element
+        document.body.removeChild(tempInput);
+    
+        // Notify the user
+        notify('Link copied to clipboard', "success");
     };
     let CustomWidth = isMobile ? '100vw' : '50vw'
-    function pdfHandler() {
+    function pdfHandlerImage(type) {
         document.getElementById("resume-container").classList.toggle("d-none");
-        toPDF()
+        if(type=="pdf"){
+            toPDF()
+        }else{
+            onButtonClick()
+        }
         document.getElementById("resume-container").classList.toggle("d-none");
     }
     return (
         <div className="resume-page">
             <div className="resume-buttons">
 
-                <button className="btn-success btn border-0" onClick={() => { pdfHandler() }}>
+               {isMobile? <button className="btn-success btn border-0" onClick={() => { pdfHandlerImage("pdf") }}>
                     Download PDF
-                </button>
-                <button className="btn-success btn border-0" onClick={() => { onButtonClick() }}>
+                </button>: <button className="btn-success btn border-0" onClick={() => { toPDF() }}>
+                    Download PDF
+                </button>}
+                {!isMobile && <button className="btn-success btn border-0" onClick={() => { onButtonClick("image") }}>
                     Download Image
-                </button>
-                <button className="btn btn-primary" onClick={saveResumeHandler}>
+                </button>}
+                <button className="btn btn-primary border-0" onClick={saveResumeHandler}>
                     Save
                 </button>
             </div>

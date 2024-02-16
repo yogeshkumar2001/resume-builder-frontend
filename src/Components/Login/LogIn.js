@@ -27,7 +27,8 @@ const LogIn = (props) => {
 
     const onSuccessHandler = async (res) => {
         let userdataObj = await callAPI(res.credential);
-        if (userdataObj.message == "Login user Successfully" || userdataObj.message == "Login and created user Successfully" && userdataObj.status == 200) {
+            console.log(userdataObj)
+        if (userdataObj.status == 200) {
             props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email,profileImage:userdataObj.data.imgUrl })
             window.location = "/"
         } else {
@@ -49,10 +50,17 @@ const LogIn = (props) => {
             let userdataObj = await postCallAPI({
                 path: userLoginPath, Data: {...tempObj}
             });
-            props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email })
-            window.location = "/"
+            console.log(userdataObj)
+            console.log(props)
+            if(userdataObj.status==200){
+
+                props.setUserLoggedIn({ auth: true, id: userdataObj.data["_id"], name: userdataObj.data.name, email: userdataObj.data.email })
+                window.location = "/"
+            }else{
+                notify(userdataObj.message, "error")
+            }
         } catch (error) {
-            return error
+           notify("Internal server issue", "error")
         }
 
 

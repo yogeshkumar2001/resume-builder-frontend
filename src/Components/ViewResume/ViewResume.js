@@ -9,6 +9,7 @@ import { deleteResumesById, getSelectedResumesById, saveResumePath } from '../AP
 import { notify } from '../Notify/notify';
 import Loading from '../Loading/Loading';
 import { getResumeTemplate } from '../Helper/helper';
+import mobilePdfImage from "../assests/images/mobile_pdf_download.png"
 function ViewResume(props) {
     const[userData,setUserData] = React.useState(null);
    React.useEffect(()=>{
@@ -73,6 +74,8 @@ function ViewResume(props) {
         toPDF()
         document.getElementById("resume-container").classList.toggle("d-none");
     }
+    let isMobile = window.matchMedia("(max-width:500px)").matches
+    let CustomWidth = isMobile ? '100vw' : '50vw'
     return (
         <div className="resume-page">
             <div className="resume-buttons">
@@ -82,12 +85,18 @@ function ViewResume(props) {
                 <button className="btn-success btn border-0" onClick={() => { onButtonClick() }}>
                     Download Image
                 </button>
-                <button className="btn btn-danger" onClick={deleteResumeHandler}>
+                <button className="btn btn-danger border-0" onClick={deleteResumeHandler}>
                     Delete
                 </button>
             </div>
-            <div className="resume-template card-final mt-2" id="resume-container">
-                {skinContainer }
+            {isMobile ? <div className="card mb-1" style={{ width: CustomWidth }}>
+                <div className="fs-4">For preview download your resume. 🚀</div>
+                <div className="d-flex justify-content-between" style={{ backgroundColor: "#eaefff" }}>
+                   <img src={mobilePdfImage }alt="" />
+                </div>
+            </div> : ''}
+            <div className={`resume-template card-final mt-2 ${isMobile ? 'd-none' : ''}`} id="resume-container">
+                {skinContainer}
             </div>
         </div>
     );
