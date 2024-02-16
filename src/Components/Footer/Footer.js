@@ -1,6 +1,6 @@
 import React from 'react';
 import "./footer.css"
-import logo from "../assests/images/logo.png"
+import logo from "../assests/images/new_resume_logo2.png"
 const Footer = () => {
   let isMobile = window.matchMedia("(max-width: 500px)").matches;
   return (<footer className={`${isMobile ? 'mb-bg mb-5' : " bg-img footer-area"}  `}>

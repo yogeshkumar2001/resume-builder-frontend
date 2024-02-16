@@ -3,7 +3,7 @@ import "./Navbar.css"
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { setUserLoggedIn, increaseStep, setUserFormData, updateTemplateData } from '../../Redux/action'
-import logoImage from "../assests/images/new_resume_logo.png"
+import logoImage from "../assests/images/new_resume_logo2.png"
 
 function Navbar(props) {
 
